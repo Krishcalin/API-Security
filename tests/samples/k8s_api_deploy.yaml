@@ -1,0 +1,66 @@
+# Intentionally vulnerable K8s API deployment for API Security Scanner testing
+
+# API-K8S-001: Ingress without TLS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+spec:
+  rules:
+    - host: api.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 8080
+---
+# API-K8S-002: LoadBalancer without source restriction
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 443
+      targetPort: 8080
+  selector:
+    app: api
+---
+# API-K8S-003: Deployment without NetworkPolicy
+# API-K8S-004: Container without resource limits
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: myregistry/api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            # API-K8S-005: Secret as env var
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: password
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: api-key

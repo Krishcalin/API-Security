@@ -1,0 +1,24 @@
+# Intentionally vulnerable API Dockerfile for API Security Scanner testing
+
+# API-DOCKER-003: Unversioned base image
+FROM python:latest
+
+# API-DOCKER-001: Run as root
+USER root
+
+# API-DOCKER-002: Secrets in Dockerfile
+ENV API_KEY=sk_live_production_key_12345
+ENV SECRET=my-super-secret-password
+ENV PASSWORD=admin123
+ARG TOKEN=github_pat_abcdefgh1234567890
+
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+
+# API-DOCKER-004: HTTP port exposed
+EXPOSE 8080
+EXPOSE 5000
+EXPOSE 3000
+
+CMD ["python", "app.py"]

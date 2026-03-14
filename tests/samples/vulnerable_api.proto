@@ -1,0 +1,74 @@
+// Intentionally vulnerable protobuf for API Security Scanner testing
+syntax = "proto3";
+
+package vulnerable.api.v1;
+
+// API-PROTO-001: Sensitive fields without annotation
+message UserResponse {
+    string user_id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+    string ssn = 5;
+    string api_key = 6;
+    string credit_card = 7;
+}
+
+message AuthRequest {
+    string username = 1;
+    string password = 2;
+    string token = 3;
+}
+
+// API-PROTO-002: RPC methods
+service UserService {
+    rpc GetUser (GetUserRequest) returns (UserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (Empty);
+    rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
+}
+
+service AdminService {
+    rpc CreateAdmin (CreateAdminRequest) returns (AdminResponse);
+    rpc ResetPassword (ResetPasswordRequest) returns (Empty);
+}
+
+message GetUserRequest {
+    string user_id = 1;
+}
+
+message UpdateUserRequest {
+    string user_id = 1;
+    string username = 2;
+    string email = 3;
+}
+
+message DeleteUserRequest {
+    string user_id = 1;
+}
+
+message ListUsersRequest {
+    int32 page_size = 1;
+    string page_token = 2;
+}
+
+message ListUsersResponse {
+    repeated UserResponse users = 1;
+    string next_page_token = 2;
+}
+
+message CreateAdminRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message AdminResponse {
+    string admin_id = 1;
+    string token = 2;
+}
+
+message ResetPasswordRequest {
+    string email = 1;
+}
+
+message Empty {}

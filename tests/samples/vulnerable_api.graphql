@@ -1,0 +1,50 @@
+# Intentionally vulnerable GraphQL schema for API Security Scanner testing
+
+# API-GQL-005 / API3-005: Sensitive fields exposed
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    password: String!
+    ssn: String
+    creditCard: String
+    role: String!
+    token: String
+}
+
+type Account {
+    id: ID!
+    owner: User!
+    balance: Float!
+    secret: String
+}
+
+type Query {
+    user(id: ID!): User
+    users(limit: Int): [User!]!
+    account(id: ID!): Account
+    searchUsers(query: String!): [User!]!
+    # Introspection: __schema and __type available by default
+}
+
+# API-GQL-004: Mutations
+type Mutation {
+    createUser(input: CreateUserInput!): User!
+    updateUser(id: ID!, input: UpdateUserInput!): User!
+    deleteUser(id: ID!): Boolean!
+    transferFunds(from: ID!, to: ID!, amount: Float!): Account!
+    resetPassword(email: String!): Boolean!
+    changeRole(userId: ID!, role: String!): User!
+}
+
+input CreateUserInput {
+    username: String!
+    email: String!
+    password: String!
+}
+
+input UpdateUserInput {
+    username: String
+    email: String
+    role: String
+}

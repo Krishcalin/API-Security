@@ -1,0 +1,73 @@
+# Intentionally vulnerable OpenAPI spec for API Security Scanner testing
+openapi: "3.0.3"
+info:
+  title: Vulnerable API
+  version: "1.0.0"
+
+# API-SPEC-005: HTTP server URL
+servers:
+  - url: http://api.example.com/v1
+
+paths:
+  /users/{userId}:
+    # API-SPEC-001: No security on endpoint
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User data
+    delete:
+      summary: Delete user
+      responses:
+        "204":
+          description: Deleted
+
+  /admin/settings:
+    post:
+      summary: Update admin settings
+      responses:
+        "200":
+          description: Updated
+
+  # API9-001: Multiple versions
+  /v1/legacy:
+    get:
+      deprecated: true
+      summary: Legacy endpoint (deprecated)
+      responses:
+        "200":
+          description: Legacy data
+
+  /v2/users:
+    get:
+      summary: Get users v2
+      responses:
+        "200":
+          description: Users list
+
+  /api/search:
+    get:
+      summary: Search
+      parameters:
+        # API-SPEC-003: API key in query
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Search results
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
