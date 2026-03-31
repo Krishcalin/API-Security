@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API Security Scan Report</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f0f23;color:#e0e0e0}
+.header{background:linear-gradient(135deg,#0ea5e9,#6366f1,#8b5cf6);padding:32px;text-align:center}
+.header h1{font-size:28px;font-weight:700;color:#fff}.header p{color:#e0e0ff;margin-top:6px}
+.meta{display:flex;justify-content:center;gap:32px;margin-top:12px;color:#c8d6e5;font-size:13px}
+.cards{display:flex;justify-content:center;gap:16px;padding:24px;flex-wrap:wrap}
+.card{background:#1a1a3e;border-radius:8px;padding:20px 32px;text-align:center;min-width:120px}
+.card-count{font-size:32px;font-weight:700;color:#fff}.card-label{font-size:13px;color:#a4b0be;margin-top:4px}
+.inv{background:#1a1a3e;margin:0 24px 16px;padding:16px 24px;border-radius:8px;border-left:3px solid #6366f1}
+.inv p{margin:4px 0;font-size:14px}
+.container{padding:0 24px 24px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1a1a3e;padding:10px 8px;text-align:left;position:sticky;top:0;cursor:pointer}
+td{padding:8px;border-bottom:1px solid #2a2a4e;vertical-align:top}
+tr:hover{background:#1e1e3f}
+.sev{padding:2px 8px;border-radius:4px;color:#fff;font-weight:600;font-size:11px}
+.comp-tag{display:inline-block;background:#2a2a5e;padding:1px 6px;border-radius:3px;font-size:10px;margin:1px}
+code{background:#1a1a3e;padding:2px 5px;border-radius:3px;font-size:12px;word-break:break-all}
+a{color:#6366f1;text-decoration:none}a:hover{text-decoration:underline}
+.filters{padding:8px 24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.filters label{font-size:13px;cursor:pointer;display:flex;align-items:center;gap:4px}
+</style></head><body>
+<div class="header"><h1>API Security Scanner — Scan Report</h1>
+<p>Discovery, Vulnerability &amp; Misconfiguration Management</p>
+<div class="meta"><span>Version 1.0.0</span><span>2026-03-31 02:22:01 UTC</span>
+<span>Files: 8</span><span>Findings: 195</span></div></div>
+<div class="cards"><div class="card" style="border-top:3px solid #ff4757"><div class="card-count">53</div><div class="card-label">CRITICAL</div></div><div class="card" style="border-top:3px solid #ff6b81"><div class="card-count">86</div><div class="card-label">HIGH</div></div><div class="card" style="border-top:3px solid #ffa502"><div class="card-count">50</div><div class="card-label">MEDIUM</div></div><div class="card" style="border-top:3px solid #1e90ff"><div class="card-count">6</div><div class="card-label">LOW</div></div><div class="card" style="border-top:3px solid #a4b0be"><div class="card-count">0</div><div class="card-label">INFO</div></div></div>
+<div class='inv'><strong>API Inventory</strong><p><strong>Frameworks:</strong> Django, Express, Flask, Gin, Graphene</p><p><strong>Protocols:</strong> GraphQL, OpenAPI, Protobuf, REST, Swagger</p><p><strong>Auth Methods:</strong> API Key, Auth0, Basic Auth, Bearer Token, JWT, OAuth2</p><p><strong>Api Gateways:</strong> Nginx</p><p><strong>Databases:</strong> MongoDB, PostgreSQL, Redis, SQLite</p></div>
+<div class="filters"><strong>Filter:</strong>
+<label><input type="checkbox" checked onchange="filterSev()" class="sev-chk" value="CRITICAL"> CRITICAL</label><label><input type="checkbox" checked onchange="filterSev()" class="sev-chk" value="HIGH"> HIGH</label><label><input type="checkbox" checked onchange="filterSev()" class="sev-chk" value="MEDIUM"> MEDIUM</label><label><input type="checkbox" checked onchange="filterSev()" class="sev-chk" value="LOW"> LOW</label><label><input type="checkbox" checked onchange="filterSev()" class="sev-chk" value="INFO"> INFO</label></div>
+<div class="container"><table><thead><tr>
+<th>#</th><th>Rule</th><th>Severity</th><th>Name</th><th>Category</th>
+<th>Location</th><th>Code</th><th>CWE</th><th>CVE</th><th>Compliance</th><th>Recommendation</th>
+</tr></thead><tbody>
+            <tr class="sev-CRITICAL">
+              <td>1</td><td>API-GQL-004</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>GraphQL mutation without authentication</td><td>GraphQL</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.graphql:31</code></td>
+              <td><code>type Mutation {</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Add authentication middleware to all GraphQL mutations.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>2</td><td>API-SEC-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded password/secret</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:14</code></td>
+              <td><code>const JWT_SECRET = "my-super-secret-jwt-key-12345678";</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables or secrets manager for credentials.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>3</td><td>API2-003</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT algorithm none or weak</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:15</code></td>
+              <td><code>const token = jwt.sign({ user: "admin" }, JWT_SECRET, { algorithm: "HS256" });</code></td>
+              <td>CWE-327</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>4</td><td>API2-003</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT algorithm none or weak</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:18</code></td>
+              <td><code>const decoded = jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });</code></td>
+              <td>CWE-327</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>5</td><td>API2-004</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT verify disabled</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:21</code></td>
+              <td><code>const unsafe = jwt.decode(token, { verify: false });</code></td>
+              <td>CWE-345</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Always verify JWT signature and expiration claims.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>6</td><td>API3-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Mass assignment — request body to model directly</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:37</code></td>
+              <td><code>const updated = Object.assign(user, req.body);</code></td>
+              <td>CWE-915</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Use explicit field allowlists. Never pass raw request body to model updates.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>7</td><td>API5-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Admin endpoint without role/permission check</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:48</code></td>
+              <td><code>router.post('/admin/users/create', (req, res) => {</code></td>
+              <td>CWE-285</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add role-based authorisation (e.g. @roles_required('admin'), isAdmin middleware).</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>8</td><td>API8-008</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>TLS certificate verification disabled</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:89</code></td>
+              <td><code>process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';</code></td>
+              <td>CWE-295</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Always verify TLS certificates in production.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>9</td><td>API-INJ-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>NoSQL injection</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:109</code></td>
+              <td><code>const users = await db.collection('users').find(req.query).toArray();</code></td>
+              <td>CWE-943</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Validate and sanitise input. Use schema validation before database queries.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>10</td><td>API-INJ-007</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Path traversal via user input</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:115</code></td>
+              <td><code>document.write(req.query.content);</code></td>
+              <td>CWE-22</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Validate and sanitise file paths. Use os.path.basename and restrict to allowed directories.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>11</td><td>API-INJ-007</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Path traversal via user input</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:121</code></td>
+              <td><code>const data = require('fs').readFile(req.query.path);</code></td>
+              <td>CWE-22</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Validate and sanitise file paths. Use os.path.basename and restrict to allowed directories.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>12</td><td>API-SEC-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded API key</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:126</code></td>
+              <td><code>const api_key = "sk_live_1234567890abcdef";</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Store API keys in environment variables or a secrets manager.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>13</td><td>API-SEC-005</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Database connection string with credentials</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:129</code></td>
+              <td><code>const mongoUrl = "mongodb://admin:password123@mongo.example.com:27017/production";</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables for database connection strings.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>14</td><td>API-SEC-006</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Bearer/OAuth token hardcoded</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:132</code></td>
+              <td><code>const headers = { Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.abc.def" };</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Retrieve tokens dynamically from auth server or secrets manager.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>15</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:19</code></td>
+              <td><code>@app.route("/api/users", methods=["POST", "PUT", "DELETE"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>16</td><td>API2-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT secret hardcoded</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:24</code></td>
+              <td><code>jwt_secret = "SuperSecretKeyThatShouldNotBeHere123"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Store JWT secrets in environment variables or a secrets manager.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>17</td><td>API-SEC-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded password/secret</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:24</code></td>
+              <td><code>jwt_secret = "SuperSecretKeyThatShouldNotBeHere123"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables or secrets manager for credentials.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>18</td><td>API2-003</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT algorithm none or weak</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:25</code></td>
+              <td><code>token = jwt.encode({"user": "admin"}, jwt_secret, algorithm="HS256")</code></td>
+              <td>CWE-327</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>19</td><td>API2-003</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT algorithm none or weak</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:28</code></td>
+              <td><code>decoded = jwt.decode(token, jwt_secret, algorithms=["HS256"])</code></td>
+              <td>CWE-327</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>20</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:37</code></td>
+              <td><code>@app.route("/login", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>21</td><td>API2-006</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>No password hashing</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:41</code></td>
+              <td><code>password == request.json.get("pass")</code></td>
+              <td>CWE-256</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use bcrypt, argon2, or scrypt for password hashing and comparison.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>22</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:50</code></td>
+              <td><code>@app.route("/api/transfer", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>23</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:55</code></td>
+              <td><code>@app.route("/auth", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>24</td><td>API1-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Direct object reference without authorisation check</td><td>BOLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:66</code></td>
+              <td><code>account_id = request.args.get("account_id")</code></td>
+              <td>CWE-639</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API1 Broken Object Level Authorization</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Validate that the authenticated user owns or has access to the requested object before returning it.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>25</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:78</code></td>
+              <td><code>@app.route("/api/profile", methods=["PUT"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>26</td><td>API3-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Mass assignment — request body to model directly</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:80</code></td>
+              <td><code>user.update(**request.json)</code></td>
+              <td>CWE-915</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Use explicit field allowlists. Never pass raw request body to model updates.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>27</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:117</code></td>
+              <td><code>@app.route("/admin/users/create", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>28</td><td>API5-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Admin endpoint without role/permission check</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:117</code></td>
+              <td><code>@app.route("/admin/users/create", methods=["POST"])</code></td>
+              <td>CWE-285</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add role-based authorisation (e.g. @roles_required('admin'), isAdmin middleware).</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>29</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:122</code></td>
+              <td><code>@app.route("/api/user/role", methods=["PUT"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>30</td><td>API5-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Privilege escalation — user can modify roles</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:124</code></td>
+              <td><code>role = request.json.get("role")</code></td>
+              <td>CWE-269</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span></td>
+              <td>Never accept role/permission changes from user input. Use server-side authorisation.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>31</td><td>API5-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Privilege escalation — user can modify roles</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:125</code></td>
+              <td><code>is_admin = request.json.get("is_admin")</code></td>
+              <td>CWE-269</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span></td>
+              <td>Never accept role/permission changes from user input. Use server-side authorisation.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>32</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:134</code></td>
+              <td><code>@app.route("/api/login", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>33</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:139</code></td>
+              <td><code>@app.route("/api/checkout", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>34</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:144</code></td>
+              <td><code>@app.route("/api/reset-password", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>35</td><td>API7-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>User-controlled URL in server-side request</td><td>SSRF</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:152</code></td>
+              <td><code>resp = requests.get(request.args.get("target_url"))</code></td>
+              <td>CWE-918</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API7 Server-Side Request Forgery</span></td>
+              <td>Validate and restrict URLs to an allowlist of domains. Block internal IPs (10.x, 172.16-31.x, 192.168.x, 127.x, 169.254.x).</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>36</td><td>API2-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>API endpoint without authentication decorator</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:162</code></td>
+              <td><code>@app.route("/api/webhooks", methods=["POST"])</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add @login_required or authentication middleware to all non-public endpoints.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>37</td><td>API2-004</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>JWT verify disabled</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:187</code></td>
+              <td><code>resp = requests.post("https://api.example.com", verify=False)</code></td>
+              <td>CWE-345</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Always verify JWT signature and expiration claims.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>38</td><td>API8-008</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>TLS certificate verification disabled</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:187</code></td>
+              <td><code>resp = requests.post("https://api.example.com", verify=False)</code></td>
+              <td>CWE-295</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Always verify TLS certificates in production.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>39</td><td>API8-009</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>CORS credentials with wildcard origin</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:190</code></td>
+              <td><code>CORS(app, supports_credentials=True)</code></td>
+              <td>CWE-942</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>When credentials are enabled, restrict origins to specific trusted domains.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>40</td><td>API-INJ-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>SQL injection via string formatting</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:219</code></td>
+              <td><code>cursor.execute(f"SELECT * FROM users WHERE name = '{q}'")</code></td>
+              <td>CWE-89</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use parameterised queries or ORM methods. Never concatenate user input into SQL.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>41</td><td>API-INJ-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>NoSQL injection</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:224</code></td>
+              <td><code>result = db.users.find(request.json)</code></td>
+              <td>CWE-943</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Validate and sanitise input. Use schema validation before database queries.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>42</td><td>API-INJ-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>NoSQL injection</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:225</code></td>
+              <td><code>record = db.orders.findOne(request.args)</code></td>
+              <td>CWE-943</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Validate and sanitise input. Use schema validation before database queries.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>43</td><td>API-INJ-003</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Command injection via user input</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:231</code></td>
+              <td><code>output = subprocess.run(request.args.get("cmd"), shell=True)</code></td>
+              <td>CWE-78</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Never pass user input to shell commands. Use parameterised subprocess calls.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>44</td><td>API-INJ-007</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Path traversal via user input</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:240</code></td>
+              <td><code>return open(request.args.get("file")).read()</code></td>
+              <td>CWE-22</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Validate and sanitise file paths. Use os.path.basename and restrict to allowed directories.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>45</td><td>API-SEC-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded API key</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:243</code></td>
+              <td><code>api_key = "sk_live_abcdefghij1234567890"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Store API keys in environment variables or a secrets manager.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>46</td><td>API-SEC-001</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded API key</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:244</code></td>
+              <td><code>api_secret = "secret_abcdefghijklmnop1234"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Store API keys in environment variables or a secrets manager.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>47</td><td>API-SEC-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded password/secret</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:244</code></td>
+              <td><code>api_secret = "secret_abcdefghijklmnop1234"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables or secrets manager for credentials.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>48</td><td>API-SEC-002</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Hardcoded password/secret</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:247</code></td>
+              <td><code>database_password = "P@ssw0rd!SuperSecret123"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables or secrets manager for credentials.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>49</td><td>API-SEC-003</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Private key in source code</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:250</code></td>
+              <td><code>key = """-----BEGIN RSA PRIVATE KEY-----</code></td>
+              <td>CWE-321</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Store private keys in a secrets manager. Never commit keys to source control.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>50</td><td>API-SEC-004</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>AWS credentials hardcoded</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:255</code></td>
+              <td><code>aws_key = "AKIAIOSFODNN7EXAMPLE01"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use IAM roles, instance profiles, or AWS Secrets Manager.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>51</td><td>API-SEC-005</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Database connection string with credentials</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:259</code></td>
+              <td><code>db_url = "postgresql://admin:secret123@db.example.com:5432/mydb"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables for database connection strings.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>52</td><td>API-SEC-005</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Database connection string with credentials</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:260</code></td>
+              <td><code>mongo_uri = "mongodb://root:password@mongo.example.com:27017/admin"</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use environment variables for database connection strings.</td>
+            </tr>
+            <tr class="sev-CRITICAL">
+              <td>53</td><td>API-SEC-006</td>
+              <td><span class="sev" style="background:#ff4757">CRITICAL</span></td>
+              <td>Bearer/OAuth token hardcoded</td><td>Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:263</code></td>
+              <td><code>headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.abc123.def456"}</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Retrieve tokens dynamically from auth server or secrets manager.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>54</td><td>API-ENV-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>API key in .env file</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:2</code></td>
+              <td><code>API_KEY=sk_live_abcdefghij1234567890</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add .env to .gitignore. Use a secrets manager in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>55</td><td>API-ENV-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>API key in .env file</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:3</code></td>
+              <td><code>API_SECRET=secret_abcdefghijklmnop1234567890</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add .env to .gitignore. Use a secrets manager in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>56</td><td>API-ENV-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>API key in .env file</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:4</code></td>
+              <td><code>SECRET_KEY=django-insecure-s3cr3t-k3y-f0r-t3st1ng</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add .env to .gitignore. Use a secrets manager in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>57</td><td>API-ENV-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>JWT secret in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:5</code></td>
+              <td><code>JWT_SECRET=my-jwt-signing-secret-do-not-share</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use a cryptographically random JWT secret. Rotate regularly.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>58</td><td>API-ENV-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>API key in .env file</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:6</code></td>
+              <td><code>AUTH_TOKEN=pat_1234567890abcdefghijklmnop</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add .env to .gitignore. Use a secrets manager in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>59</td><td>API-ENV-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Database credentials in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:8</code></td>
+              <td><code>DB_PASSWORD=P@ssw0rdForProductionDB</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use a secrets manager for database credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>60</td><td>API-ENV-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Database credentials in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:9</code></td>
+              <td><code>POSTGRES_PASSWORD=postgres_super_secret</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use a secrets manager for database credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>61</td><td>API-ENV-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Database credentials in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:10</code></td>
+              <td><code>MONGO_PASSWORD=mongo_admin_pass_123</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use a secrets manager for database credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>62</td><td>API-ENV-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Database credentials in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:11</code></td>
+              <td><code>REDIS_PASSWORD=redis-pass-abc</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use a secrets manager for database credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>63</td><td>API-ENV-005</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>OAuth client secret in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:13</code></td>
+              <td><code>OAUTH_CLIENT_SECRET=google-oauth-secret-abc123</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use a secrets manager for OAuth credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>64</td><td>API-ENV-005</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>OAuth client secret in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:14</code></td>
+              <td><code>GITHUB_CLIENT_SECRET=gh_secret_1234567890abcdef</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use a secrets manager for OAuth credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>65</td><td>API-ENV-005</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>OAuth client secret in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:15</code></td>
+              <td><code>AUTH0_CLIENT_SECRET=auth0_secret_xyz789</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use a secrets manager for OAuth credentials in production.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>66</td><td>API-K8S-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Ingress without TLS</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:5</code></td>
+              <td><code>kind: Ingress</code></td>
+              <td>CWE-319</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add TLS section with certificate secret to Ingress.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>67</td><td>API-K8S-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Ingress without TLS</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:5</code></td>
+              <td><code>kind: Ingress</code></td>
+              <td>CWE-319</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Add TLS section with certificate secret to Ingress.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>68</td><td>API-GW-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Nginx proxy_pass without rate limiting</td><td>API Gateway</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\nginx_api.conf:14</code></td>
+              <td><code>proxy_pass http://api_backend;</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Add limit_req_zone and limit_req directives for rate limiting.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>69</td><td>API-GW-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Nginx proxy_pass without rate limiting</td><td>API Gateway</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\nginx_api.conf:20</code></td>
+              <td><code>proxy_pass http://api_backend;</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Add limit_req_zone and limit_req directives for rate limiting.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>70</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:14</code></td>
+              <td><code>const JWT_SECRET = "my-super-secret-jwt-key-12345678";</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>71</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:15</code></td>
+              <td><code>const token = jwt.sign({ user: "admin" }, JWT_SECRET, { algorithm: "HS256" });</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>72</td><td>API1-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Express route with ID param lacking auth middleware</td><td>BOLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:25</code></td>
+              <td><code>router.get('/:userId/profile', (req, res) => {</code></td>
+              <td>CWE-639</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API1 Broken Object Level Authorization</span></td>
+              <td>Add authorisation middleware to verify the caller has access to the resource.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>73</td><td>API1-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Express route with ID param lacking auth middleware</td><td>BOLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:30</code></td>
+              <td><code>router.delete('/:id/account', (req, res) => {</code></td>
+              <td>CWE-639</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API1 Broken Object Level Authorization</span></td>
+              <td>Add authorisation middleware to verify the caller has access to the resource.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>74</td><td>API5-004</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Missing permission check on DELETE endpoint</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:30</code></td>
+              <td><code>router.delete('/:id/account', (req, res) => {</code></td>
+              <td>CWE-285</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span></td>
+              <td>Add authorisation check verifying the caller has delete permissions.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>75</td><td>API3-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Excessive data exposure — full model serialisation</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:44</code></td>
+              <td><code>res.json(JSON.stringify(user));</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span></td>
+              <td>Use response serialisers with explicit field allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>76</td><td>API7-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Webhook URL from user input</td><td>SSRF</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:63</code></td>
+              <td><code>const webhook_url = req.body.callback_url;</code></td>
+              <td>CWE-918</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API7 Server-Side Request Forgery</span></td>
+              <td>Validate webhook URLs and restrict to HTTPS with domain allowlist.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>77</td><td>API8-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Debug mode enabled</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:75</code></td>
+              <td><code>process.env.DEBUG = true;</code></td>
+              <td>CWE-215</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Disable debug mode in production environments.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>78</td><td>API-INJ-004</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>XSS via unsanitised output</td><td>Input Validation</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:116</code></td>
+              <td><code>element.innerHTML = req.body.html;</code></td>
+              <td>CWE-79</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Sanitise all output. Use context-appropriate encoding.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>79</td><td>API-TLS-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>HTTP endpoint (not HTTPS)</td><td>Transport Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:135</code></td>
+              <td><code>const partnerApi = "http://api.partner-service.com/v2/data";</code></td>
+              <td>CWE-319</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use HTTPS for all API endpoints.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>80</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:138</code></td>
+              <td><code>console.log(`Auth token: ${token}, password: ${password}`);</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>81</td><td>API-LOG-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Sensitive data in logs</td><td>Logging & Monitoring</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:138</code></td>
+              <td><code>console.log(`Auth token: ${token}, password: ${password}`);</code></td>
+              <td>CWE-532</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Mask or redact sensitive data before logging.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>82</td><td>API-TLS-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Weak cipher suite</td><td>Transport Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:142</code></td>
+              <td><code>axios.get("https://slow-api.com/data", { timeout: null });</code></td>
+              <td>CWE-327</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use only strong cipher suites (AES-256-GCM, CHACHA20-POLY1305).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>83</td><td>API-PROTO-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>RPC without authentication metadata</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:25</code></td>
+              <td><code>rpc GetUser (GetUserRequest) returns (UserResponse);</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Implement per-RPC authentication using metadata interceptors.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>84</td><td>API-PROTO-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>RPC without authentication metadata</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:26</code></td>
+              <td><code>rpc UpdateUser (UpdateUserRequest) returns (UserResponse);</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Implement per-RPC authentication using metadata interceptors.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>85</td><td>API-PROTO-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>RPC without authentication metadata</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:27</code></td>
+              <td><code>rpc DeleteUser (DeleteUserRequest) returns (Empty);</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Implement per-RPC authentication using metadata interceptors.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>86</td><td>API-PROTO-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>RPC without authentication metadata</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:28</code></td>
+              <td><code>rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Implement per-RPC authentication using metadata interceptors.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>87</td><td>API-PROTO-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>RPC without authentication metadata</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:32</code></td>
+              <td><code>rpc CreateAdmin (CreateAdminRequest) returns (AdminResponse);</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Implement per-RPC authentication using metadata interceptors.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>88</td><td>API-PROTO-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>RPC without authentication metadata</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:33</code></td>
+              <td><code>rpc ResetPassword (ResetPasswordRequest) returns (Empty);</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Implement per-RPC authentication using metadata interceptors.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>89</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:19</code></td>
+              <td><code>@app.route("/api/users", methods=["POST", "PUT", "DELETE"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>90</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:24</code></td>
+              <td><code>jwt_secret = "SuperSecretKeyThatShouldNotBeHere123"</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>91</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:25</code></td>
+              <td><code>token = jwt.encode({"user": "admin"}, jwt_secret, algorithm="HS256")</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>92</td><td>API2-005</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>API key in query string</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:34</code></td>
+              <td><code>api_key = request.args.get("api_key")</code></td>
+              <td>CWE-598</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Pass API keys in Authorization header, not in URL query parameters.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>93</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:37</code></td>
+              <td><code>@app.route("/login", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>94</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:41</code></td>
+              <td><code>password == request.json.get("pass")</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>95</td><td>API2-007</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Basic auth over HTTP</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:44</code></td>
+              <td><code>from flask_httpauth import HTTPBasicAuth</code></td>
+              <td>CWE-523</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Only use Basic Auth over HTTPS/TLS. Prefer token-based auth.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>96</td><td>API2-007</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Basic auth over HTTP</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:45</code></td>
+              <td><code>basic_auth = HTTPBasicAuth()</code></td>
+              <td>CWE-523</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Only use Basic Auth over HTTPS/TLS. Prefer token-based auth.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>97</td><td>API2-008</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Missing CSRF protection on state-changing endpoint</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:48</code></td>
+              <td><code>from flask_wtf.csrf import csrf_exempt</code></td>
+              <td>CWE-352</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Enable CSRF protection on all state-changing API endpoints.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>98</td><td>API2-008</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Missing CSRF protection on state-changing endpoint</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:49</code></td>
+              <td><code>@csrf_exempt</code></td>
+              <td>CWE-352</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Enable CSRF protection on all state-changing API endpoints.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>99</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:50</code></td>
+              <td><code>@app.route("/api/transfer", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>100</td><td>API6-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No anti-automation on payment/checkout flow</td><td>Business Flow</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:50</code></td>
+              <td><code>@app.route("/api/transfer", methods=["POST"])</code></td>
+              <td>CWE-799</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API6 Unrestricted Access to Sensitive Business Flows</span><span class="comp-tag">PCI-DSS v4.0</span><span class="comp-tag">DORA</span></td>
+              <td>Add CAPTCHA, velocity checks, and transaction verification on financial endpoints.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>101</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:55</code></td>
+              <td><code>@app.route("/auth", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>102</td><td>API2-010</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>OAuth2 implicit flow</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:61</code></td>
+              <td><code>oauth_config = {"response_type": "token", "grant": "implicit flow"}</code></td>
+              <td>CWE-287</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Use Authorization Code flow with PKCE instead of implicit flow.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>103</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:64</code></td>
+              <td><code>@app.route("/api/account")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>104</td><td>API1-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Path parameter ID without ownership validation</td><td>BOLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:70</code></td>
+              <td><code>@app.get("/api/users/<int:id>")</code></td>
+              <td>CWE-639</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API1 Broken Object Level Authorization</span></td>
+              <td>Add ownership validation middleware or check that current_user owns the resource.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>105</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:70</code></td>
+              <td><code>@app.get("/api/users/<int:id>")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>106</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:78</code></td>
+              <td><code>@app.route("/api/profile", methods=["PUT"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>107</td><td>API3-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Excessive data exposure — full model serialisation</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:81</code></td>
+              <td><code>return jsonify(user.to_dict())</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span></td>
+              <td>Use response serialisers with explicit field allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>108</td><td>API1-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Path parameter ID without ownership validation</td><td>BOLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:84</code></td>
+              <td><code>@app.route("/api/user/<int:id>")</code></td>
+              <td>CWE-639</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API1 Broken Object Level Authorization</span></td>
+              <td>Add ownership validation middleware or check that current_user owns the resource.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>109</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:84</code></td>
+              <td><code>@app.route("/api/user/<int:id>")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>110</td><td>API3-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Excessive data exposure — full model serialisation</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:87</code></td>
+              <td><code>return jsonify(user.to_dict())</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span></td>
+              <td>Use response serialisers with explicit field allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>111</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:99</code></td>
+              <td><code>@app.route("/api/search", methods=["GET"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>112</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:117</code></td>
+              <td><code>@app.route("/admin/users/create", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>113</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:122</code></td>
+              <td><code>@app.route("/api/user/role", methods=["PUT"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>114</td><td>API1-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Path parameter ID without ownership validation</td><td>BOLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:129</code></td>
+              <td><code>@app.delete("/api/records/<int:id>")</code></td>
+              <td>CWE-639</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API1 Broken Object Level Authorization</span></td>
+              <td>Add ownership validation middleware or check that current_user owns the resource.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>115</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:129</code></td>
+              <td><code>@app.delete("/api/records/<int:id>")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>116</td><td>API5-004</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Missing permission check on DELETE endpoint</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:129</code></td>
+              <td><code>@app.delete("/api/records/<int:id>")</code></td>
+              <td>CWE-285</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span></td>
+              <td>Add authorisation check verifying the caller has delete permissions.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>117</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:134</code></td>
+              <td><code>@app.route("/api/login", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>118</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:139</code></td>
+              <td><code>@app.route("/api/checkout", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>119</td><td>API6-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No anti-automation on payment/checkout flow</td><td>Business Flow</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:139</code></td>
+              <td><code>@app.route("/api/checkout", methods=["POST"])</code></td>
+              <td>CWE-799</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API6 Unrestricted Access to Sensitive Business Flows</span><span class="comp-tag">PCI-DSS v4.0</span><span class="comp-tag">DORA</span></td>
+              <td>Add CAPTCHA, velocity checks, and transaction verification on financial endpoints.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>120</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:144</code></td>
+              <td><code>@app.route("/api/reset-password", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>121</td><td>API6-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Password reset without rate limiting</td><td>Business Flow</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:144</code></td>
+              <td><code>@app.route("/api/reset-password", methods=["POST"])</code></td>
+              <td>CWE-640</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API6 Unrestricted Access to Sensitive Business Flows</span></td>
+              <td>Rate-limit password reset requests and use short-lived tokens.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>122</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:149</code></td>
+              <td><code>@app.route("/api/fetch")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>123</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:156</code></td>
+              <td><code>@app.route("/redirect")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>124</td><td>API7-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>URL parameter used for redirect</td><td>SSRF</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:158</code></td>
+              <td><code>redirect_to = request.args.get("redirect_to")</code></td>
+              <td>CWE-601</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API7 Server-Side Request Forgery</span></td>
+              <td>Validate redirect URLs against an allowlist. Never redirect to arbitrary user input.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>125</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:162</code></td>
+              <td><code>@app.route("/api/webhooks", methods=["POST"])</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>126</td><td>API7-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Webhook URL from user input</td><td>SSRF</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:164</code></td>
+              <td><code>webhook_url = request.json.get("callback_url")</code></td>
+              <td>CWE-918</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API7 Server-Side Request Forgery</span></td>
+              <td>Validate webhook URLs and restrict to HTTPS with domain allowlist.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>127</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:193</code></td>
+              <td><code>@app.route("/api-docs")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>128</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:198</code></td>
+              <td><code>@app.route("/api/v1/legacy")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>129</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:204</code></td>
+              <td><code>@app.route("/debug/info")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>130</td><td>API9-004</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal/debug endpoint exposed</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:204</code></td>
+              <td><code>@app.route("/debug/info")</code></td>
+              <td>CWE-200</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Remove debug/test endpoints from production. Restrict internal endpoints to internal networks.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>131</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:216</code></td>
+              <td><code>@app.route("/api/query")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>132</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:228</code></td>
+              <td><code>@app.route("/api/ping")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>133</td><td>API4-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No rate limiting on API endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:238</code></td>
+              <td><code>@app.route("/api/download")</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span><span class="comp-tag">DORA</span></td>
+              <td>Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>134</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:244</code></td>
+              <td><code>api_secret = "secret_abcdefghijklmnop1234"</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>135</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:247</code></td>
+              <td><code>database_password = "P@ssw0rd!SuperSecret123"</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>136</td><td>API-TLS-001</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>HTTP endpoint (not HTTPS)</td><td>Transport Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:266</code></td>
+              <td><code>partner_api = "http://api.partner.com/v1/data"</code></td>
+              <td>CWE-319</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Use HTTPS for all API endpoints.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>137</td><td>API-TLS-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Weak TLS version allowed</td><td>Transport Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:270</code></td>
+              <td><code>ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1)</code></td>
+              <td>CWE-326</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Enforce TLS 1.2 or higher. Disable TLS 1.0 and 1.1.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>138</td><td>API3-003</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>Internal fields exposed in API response</td><td>Property Level Auth</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:273</code></td>
+              <td><code>logging.info(f"User login with password: {password} and token: {token}")</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span><span class="comp-tag">GDPR</span><span class="comp-tag">PCI-DSS v4.0</span></td>
+              <td>Exclude sensitive fields from API responses using serialiser allowlists.</td>
+            </tr>
+            <tr class="sev-HIGH">
+              <td>139</td><td>API-SPEC-002</td>
+              <td><span class="sev" style="background:#ff6b81">HIGH</span></td>
+              <td>No global security scheme defined</td><td>OpenAPI Spec</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_openapi.yaml:2</code></td>
+              <td><code>openapi: "3.0.3"</code></td>
+              <td>CWE-306</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Define securitySchemes in components and apply globally or per-operation.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>140</td><td>API-ENV-006</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Webhook secret in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:17</code></td>
+              <td><code>WEBHOOK_SECRET=whsec_abcdef1234567890</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Ensure webhook secrets are strong and rotated regularly.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>141</td><td>API-ENV-006</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Webhook secret in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:18</code></td>
+              <td><code>STRIPE_WEBHOOK_SECRET=whsec_stripe_secret_key_123</code></td>
+              <td>CWE-798</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Ensure webhook secrets are strong and rotated regularly.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>142</td><td>API-ENV-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Debug mode enabled in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:20</code></td>
+              <td><code>DEBUG=true</code></td>
+              <td>CWE-215</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Disable debug mode in production environments.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>143</td><td>API-ENV-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Debug mode enabled in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:21</code></td>
+              <td><code>NODE_ENV=development</code></td>
+              <td>CWE-215</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Disable debug mode in production environments.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>144</td><td>API-ENV-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Debug mode enabled in .env</td><td>Environment Secrets</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\.env.api:22</code></td>
+              <td><code>FLASK_DEBUG=1</code></td>
+              <td>CWE-215</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Disable debug mode in production environments.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>145</td><td>API-K8S-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Service type LoadBalancer without restriction</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:27</code></td>
+              <td><code>type: LoadBalancer</code></td>
+              <td>CWE-668</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Add loadBalancerSourceRanges to restrict access.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>146</td><td>API-K8S-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Service type LoadBalancer without restriction</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:27</code></td>
+              <td><code>type: LoadBalancer</code></td>
+              <td>CWE-668</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Add loadBalancerSourceRanges to restrict access.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>147</td><td>API-K8S-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Missing NetworkPolicy for API pods</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:37</code></td>
+              <td><code>kind: Deployment</code></td>
+              <td>CWE-668</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Create NetworkPolicy to restrict ingress/egress traffic.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>148</td><td>API-K8S-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Missing NetworkPolicy for API pods</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:37</code></td>
+              <td><code>kind: Deployment</code></td>
+              <td>CWE-668</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Create NetworkPolicy to restrict ingress/egress traffic.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>149</td><td>API-K8S-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>API container without resource limits</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:50</code></td>
+              <td><code>containers:</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Set CPU and memory limits on all API containers.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>150</td><td>API-K8S-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>API container without resource limits</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:50</code></td>
+              <td><code>containers:</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Set CPU and memory limits on all API containers.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>151</td><td>API-K8S-005</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Secret mounted as environment variable</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:59</code></td>
+              <td><code>secretKeyRef:</code></td>
+              <td>CWE-214</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Mount secrets as files instead of environment variables.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>152</td><td>API-K8S-005</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Secret mounted as environment variable</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:59</code></td>
+              <td><code>secretKeyRef:</code></td>
+              <td>CWE-214</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Mount secrets as files instead of environment variables.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>153</td><td>API-K8S-005</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Secret mounted as environment variable</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:64</code></td>
+              <td><code>secretKeyRef:</code></td>
+              <td>CWE-214</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Mount secrets as files instead of environment variables.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>154</td><td>API-K8S-005</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Secret mounted as environment variable</td><td>K8s API Security</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\k8s_api_deploy.yaml:64</code></td>
+              <td><code>secretKeyRef:</code></td>
+              <td>CWE-214</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Mount secrets as files instead of environment variables.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>155</td><td>API5-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>HTTP method override allowed</td><td>BFLA</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:53</code></td>
+              <td><code>app.use(require('method-override')('X-HTTP-Method-Override'));</code></td>
+              <td>CWE-285</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API5 Broken Function Level Authorization</span></td>
+              <td>Disable HTTP method override or restrict to safe methods.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>156</td><td>API8-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Verbose error messages exposed</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:79</code></td>
+              <td><code>res.status(500).json({ error: err.stack });</code></td>
+              <td>CWE-209</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Return generic error messages. Log details server-side only.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>157</td><td>API9-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Swagger/OpenAPI endpoint publicly exposed</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:98</code></td>
+              <td><code>app.get('/swagger', (req, res) => res.json(swaggerDoc));</code></td>
+              <td>CWE-200</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Restrict API documentation access in production. Use authentication or IP allowlist.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>158</td><td>API9-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Swagger/OpenAPI endpoint publicly exposed</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:99</code></td>
+              <td><code>app.get('/api-docs', (req, res) => res.json(swaggerDoc));</code></td>
+              <td>CWE-200</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Restrict API documentation access in production. Use authentication or IP allowlist.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>159</td><td>API9-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>API version in URL without deprecation</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:135</code></td>
+              <td><code>const partnerApi = "http://api.partner-service.com/v2/data";</code></td>
+              <td>CWE-1059</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Maintain API version inventory. Deprecate and retire old versions with clear timelines.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>160</td><td>API-LOG-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Full request body logged</td><td>Logging & Monitoring</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:139</code></td>
+              <td><code>console.log(`Request body: ${JSON.stringify(req.body)}`);</code></td>
+              <td>CWE-532</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span><span class="comp-tag">GDPR</span></td>
+              <td>Log request metadata only. Redact body or log sanitised summaries.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>161</td><td>API4-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>No request timeout configured</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:142</code></td>
+              <td><code>axios.get("https://slow-api.com/data", { timeout: null });</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Set appropriate request timeouts (e.g. 30 seconds for API calls).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>162</td><td>API10-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>External API call without timeout</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:145</code></td>
+              <td><code>const resp = await fetch("https://api.third-party.com/data");</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Set explicit timeouts on all external API calls (e.g. timeout=30).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>163</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:11</code></td>
+              <td><code>string password = 4;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>164</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:12</code></td>
+              <td><code>string ssn = 5;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>165</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:13</code></td>
+              <td><code>string api_key = 6;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>166</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:14</code></td>
+              <td><code>string credit_card = 7;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>167</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:19</code></td>
+              <td><code>string password = 2;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>168</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:20</code></td>
+              <td><code>string token = 3;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>169</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:62</code></td>
+              <td><code>string password = 2;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>170</td><td>API-PROTO-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Sensitive field without field_behavior annotation</td><td>Protobuf</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.proto:67</code></td>
+              <td><code>string token = 2;</code></td>
+              <td>CWE-213</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API3 Broken Object Property Level Authorization</span></td>
+              <td>Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>171</td><td>API6-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>No CAPTCHA on authentication endpoint</td><td>Business Flow</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:37</code></td>
+              <td><code>@app.route("/login", methods=["POST"])</code></td>
+              <td>CWE-307</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API6 Unrestricted Access to Sensitive Business Flows</span><span class="comp-tag">DORA</span></td>
+              <td>Add CAPTCHA or progressive delays after failed attempts.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>172</td><td>API2-009</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Session fixation risk — no session regeneration</td><td>Broken Authentication</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:57</code></td>
+              <td><code>session["user"] = request.json.get("username")</code></td>
+              <td>CWE-384</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API2 Broken Authentication</span></td>
+              <td>Regenerate session ID after successful authentication.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>173</td><td>API4-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>No pagination on list endpoint</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:104</code></td>
+              <td><code>results = User.query.filter().all()</code></td>
+              <td>CWE-770</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Implement pagination with limit/offset or cursor-based pagination.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>174</td><td>API4-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>No request timeout configured</td><td>Resource Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:110</code></td>
+              <td><code>response = requests.get("https://external-api.com/data", timeout=None)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API4 Unrestricted Resource Consumption</span></td>
+              <td>Set appropriate request timeouts (e.g. 30 seconds for API calls).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>175</td><td>API10-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>External API call without timeout</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:110</code></td>
+              <td><code>response = requests.get("https://external-api.com/data", timeout=None)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Set explicit timeouts on all external API calls (e.g. timeout=30).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>176</td><td>API6-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>No CAPTCHA on authentication endpoint</td><td>Business Flow</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:134</code></td>
+              <td><code>@app.route("/api/login", methods=["POST"])</code></td>
+              <td>CWE-307</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API6 Unrestricted Access to Sensitive Business Flows</span><span class="comp-tag">DORA</span></td>
+              <td>Add CAPTCHA or progressive delays after failed attempts.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>177</td><td>API10-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>External API call without timeout</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:152</code></td>
+              <td><code>resp = requests.get(request.args.get("target_url"))</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Set explicit timeouts on all external API calls (e.g. timeout=30).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>178</td><td>API8-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Verbose error messages exposed</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:178</code></td>
+              <td><code>return jsonify({"error": traceback.format_exc()}), 500</code></td>
+              <td>CWE-209</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Return generic error messages. Log details server-side only.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>179</td><td>API8-007</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Bind to 0.0.0.0</td><td>Misconfiguration</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:184</code></td>
+              <td><code>app.run(host="0.0.0.0", port=5000)</code></td>
+              <td>CWE-668</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API8 Security Misconfiguration</span></td>
+              <td>Bind to 127.0.0.1 or use a reverse proxy for external access.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>180</td><td>API10-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>External API call without timeout</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:187</code></td>
+              <td><code>resp = requests.post("https://api.example.com", verify=False)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Set explicit timeouts on all external API calls (e.g. timeout=30).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>181</td><td>API9-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Swagger/OpenAPI endpoint publicly exposed</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:193</code></td>
+              <td><code>@app.route("/api-docs")</code></td>
+              <td>CWE-200</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Restrict API documentation access in production. Use authentication or IP allowlist.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>182</td><td>API9-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>API version in URL without deprecation</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:198</code></td>
+              <td><code>@app.route("/api/v1/legacy")</code></td>
+              <td>CWE-1059</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Maintain API version inventory. Deprecate and retire old versions with clear timelines.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>183</td><td>API9-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Deprecated API endpoint still active</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:198</code></td>
+              <td><code>@app.route("/api/v1/legacy")</code></td>
+              <td>CWE-1059</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Remove deprecated endpoints or apply identical security controls as current versions.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>184</td><td>API9-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Deprecated API endpoint still active</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:199</code></td>
+              <td><code>def legacy():</code></td>
+              <td>CWE-1059</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Remove deprecated endpoints or apply identical security controls as current versions.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>185</td><td>API9-003</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Deprecated API endpoint still active</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:200</code></td>
+              <td><code>"""deprecated endpoint"""</code></td>
+              <td>CWE-1059</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Remove deprecated endpoints or apply identical security controls as current versions.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>186</td><td>API10-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>External API call without timeout</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:209</code></td>
+              <td><code>external = requests.get("https://api.partner.com/data")</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Set explicit timeouts on all external API calls (e.g. timeout=30).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>187</td><td>API10-002</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>External API call without timeout</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:213</code></td>
+              <td><code>r = requests.get("https://untrusted.com", allow_redirects=True)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Set explicit timeouts on all external API calls (e.g. timeout=30).</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>188</td><td>API10-004</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>Blindly following redirects from external API</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:213</code></td>
+              <td><code>r = requests.get("https://untrusted.com", allow_redirects=True)</code></td>
+              <td>CWE-601</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Disable or limit redirects when calling external APIs.</td>
+            </tr>
+            <tr class="sev-MEDIUM">
+              <td>189</td><td>API9-001</td>
+              <td><span class="sev" style="background:#ffa502">MEDIUM</span></td>
+              <td>API version in URL without deprecation</td><td>Inventory Management</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:266</code></td>
+              <td><code>partner_api = "http://api.partner.com/v1/data"</code></td>
+              <td>CWE-1059</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API9 Improper Inventory Management</span></td>
+              <td>Maintain API version inventory. Deprecate and retire old versions with clear timelines.</td>
+            </tr>
+            <tr class="sev-LOW">
+              <td>190</td><td>API-GW-002</td>
+              <td><span class="sev" style="background:#1e90ff">LOW</span></td>
+              <td>Nginx upstream without health check</td><td>API Gateway</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\nginx_api.conf:3</code></td>
+              <td><code>upstream api_backend {</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Add health_check directive to upstream blocks.</td>
+            </tr>
+            <tr class="sev-LOW">
+              <td>191</td><td>API10-003</td>
+              <td><span class="sev" style="background:#1e90ff">LOW</span></td>
+              <td>No circuit breaker on external API</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.js:142</code></td>
+              <td><code>axios.get("https://slow-api.com/data", { timeout: null });</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Implement circuit breaker pattern for external API dependencies.</td>
+            </tr>
+            <tr class="sev-LOW">
+              <td>192</td><td>API10-003</td>
+              <td><span class="sev" style="background:#1e90ff">LOW</span></td>
+              <td>No circuit breaker on external API</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:110</code></td>
+              <td><code>response = requests.get("https://external-api.com/data", timeout=None)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Implement circuit breaker pattern for external API dependencies.</td>
+            </tr>
+            <tr class="sev-LOW">
+              <td>193</td><td>API10-003</td>
+              <td><span class="sev" style="background:#1e90ff">LOW</span></td>
+              <td>No circuit breaker on external API</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:187</code></td>
+              <td><code>resp = requests.post("https://api.example.com", verify=False)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Implement circuit breaker pattern for external API dependencies.</td>
+            </tr>
+            <tr class="sev-LOW">
+              <td>194</td><td>API10-003</td>
+              <td><span class="sev" style="background:#1e90ff">LOW</span></td>
+              <td>No circuit breaker on external API</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:209</code></td>
+              <td><code>external = requests.get("https://api.partner.com/data")</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Implement circuit breaker pattern for external API dependencies.</td>
+            </tr>
+            <tr class="sev-LOW">
+              <td>195</td><td>API10-003</td>
+              <td><span class="sev" style="background:#1e90ff">LOW</span></td>
+              <td>No circuit breaker on external API</td><td>Unsafe Consumption</td>
+              <td><code>C:\KRISHNENDU\PROJECTS\API-Security\API-Security\tests\samples\vulnerable_api.py:213</code></td>
+              <td><code>r = requests.get("https://untrusted.com", allow_redirects=True)</code></td>
+              <td>CWE-400</td><td></td>
+              <td><span class="comp-tag">OWASP API Top 10:API10 Unsafe Consumption of APIs</span></td>
+              <td>Implement circuit breaker pattern for external API dependencies.</td>
+            </tr></tbody></table></div>
+<script>
+function filterSev(){
+  const chk=document.querySelectorAll('.sev-chk');
+  const on=new Set();chk.forEach(c=>{if(c.checked)on.add(c.value)});
+  document.querySelectorAll('tbody tr').forEach(r=>{
+    const s=r.className.replace('sev-','');r.style.display=on.has(s)?'':'none';
+  });
+}
+</script></body></html>

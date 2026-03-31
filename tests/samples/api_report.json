@@ -1,0 +1,3268 @@
+{
+  "scanner": "API Security Scanner",
+  "version": "1.0.0",
+  "scan_date": "2026-03-31T02:22:01.204382+00:00",
+  "files_scanned": 8,
+  "api_inventory": {
+    "frameworks": [
+      "Django",
+      "Express",
+      "Flask",
+      "Gin",
+      "Graphene"
+    ],
+    "protocols": [
+      "GraphQL",
+      "OpenAPI",
+      "Protobuf",
+      "REST",
+      "Swagger"
+    ],
+    "auth_methods": [
+      "API Key",
+      "Auth0",
+      "Basic Auth",
+      "Bearer Token",
+      "JWT",
+      "OAuth2"
+    ],
+    "api_gateways": [
+      "Nginx"
+    ],
+    "databases": [
+      "MongoDB",
+      "PostgreSQL",
+      "Redis",
+      "SQLite"
+    ]
+  },
+  "summary": {
+    "CRITICAL": 53,
+    "HIGH": 86,
+    "MEDIUM": 50,
+    "LOW": 6,
+    "INFO": 0
+  },
+  "findings": [
+    {
+      "rule_id": "API-GQL-004",
+      "name": "GraphQL mutation without authentication",
+      "category": "GraphQL",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.graphql",
+      "line_num": 31,
+      "line_content": "type Mutation {",
+      "description": "GraphQL mutations detected \u2014 ensure authentication is required.",
+      "recommendation": "Add authentication middleware to all GraphQL mutations.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-002",
+      "name": "Hardcoded password/secret",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 14,
+      "line_content": "const JWT_SECRET = \"my-super-secret-jwt-key-12345678\";",
+      "description": "Password or secret hardcoded in source code.",
+      "recommendation": "Use environment variables or secrets manager for credentials.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-003",
+      "name": "JWT algorithm none or weak",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 15,
+      "line_content": "const token = jwt.sign({ user: \"admin\" }, JWT_SECRET, { algorithm: \"HS256\" });",
+      "description": "JWT using 'none' or weak HS256 algorithm.",
+      "recommendation": "Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.",
+      "cwe": "CWE-327",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-003",
+      "name": "JWT algorithm none or weak",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 18,
+      "line_content": "const decoded = jwt.verify(token, JWT_SECRET, { algorithms: [\"HS256\"] });",
+      "description": "JWT using 'none' or weak HS256 algorithm.",
+      "recommendation": "Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.",
+      "cwe": "CWE-327",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-004",
+      "name": "JWT verify disabled",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 21,
+      "line_content": "const unsafe = jwt.decode(token, { verify: false });",
+      "description": "JWT signature or expiry verification is disabled.",
+      "recommendation": "Always verify JWT signature and expiration claims.",
+      "cwe": "CWE-345",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API3-001",
+      "name": "Mass assignment \u2014 request body to model directly",
+      "category": "Property Level Auth",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 37,
+      "line_content": "const updated = Object.assign(user, req.body);",
+      "description": "Request body unpacked directly into model \u2014 mass assignment vulnerability.",
+      "recommendation": "Use explicit field allowlists. Never pass raw request body to model updates.",
+      "cwe": "CWE-915",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API5-001",
+      "name": "Admin endpoint without role/permission check",
+      "category": "BFLA",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 48,
+      "line_content": "router.post('/admin/users/create', (req, res) => {",
+      "description": "Administrative endpoint \u2014 ensure proper role-based access control.",
+      "recommendation": "Add role-based authorisation (e.g. @roles_required('admin'), isAdmin middleware).",
+      "cwe": "CWE-285",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API8-008",
+      "name": "TLS certificate verification disabled",
+      "category": "Misconfiguration",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 89,
+      "line_content": "process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';",
+      "description": "TLS certificate verification disabled \u2014 vulnerable to MITM attacks.",
+      "recommendation": "Always verify TLS certificates in production.",
+      "cwe": "CWE-295",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-002",
+      "name": "NoSQL injection",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 109,
+      "line_content": "const users = await db.collection('users').find(req.query).toArray();",
+      "description": "MongoDB/NoSQL query with direct user input \u2014 NoSQL injection.",
+      "recommendation": "Validate and sanitise input. Use schema validation before database queries.",
+      "cwe": "CWE-943",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-007",
+      "name": "Path traversal via user input",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 115,
+      "line_content": "document.write(req.query.content);",
+      "description": "File path constructed from user input \u2014 path traversal vulnerability.",
+      "recommendation": "Validate and sanitise file paths. Use os.path.basename and restrict to allowed directories.",
+      "cwe": "CWE-22",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-007",
+      "name": "Path traversal via user input",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 121,
+      "line_content": "const data = require('fs').readFile(req.query.path);",
+      "description": "File path constructed from user input \u2014 path traversal vulnerability.",
+      "recommendation": "Validate and sanitise file paths. Use os.path.basename and restrict to allowed directories.",
+      "cwe": "CWE-22",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-001",
+      "name": "Hardcoded API key",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 126,
+      "line_content": "const api_key = \"sk_live_1234567890abcdef\";",
+      "description": "API key hardcoded in source code.",
+      "recommendation": "Store API keys in environment variables or a secrets manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-005",
+      "name": "Database connection string with credentials",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 129,
+      "line_content": "const mongoUrl = \"mongodb://admin:password123@mongo.example.com:27017/production\";",
+      "description": "Database connection string with embedded credentials.",
+      "recommendation": "Use environment variables for database connection strings.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-006",
+      "name": "Bearer/OAuth token hardcoded",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 132,
+      "line_content": "const headers = { Authorization: \"Bearer eyJhbGciOiJIUzI1NiJ9.abc.def\" };",
+      "description": "Bearer token hardcoded in source code.",
+      "recommendation": "Retrieve tokens dynamically from auth server or secrets manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 19,
+      "line_content": "@app.route(\"/api/users\", methods=[\"POST\", \"PUT\", \"DELETE\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-002",
+      "name": "JWT secret hardcoded",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 24,
+      "line_content": "jwt_secret = \"SuperSecretKeyThatShouldNotBeHere123\"",
+      "description": "JWT secret is hardcoded in source code.",
+      "recommendation": "Store JWT secrets in environment variables or a secrets manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-002",
+      "name": "Hardcoded password/secret",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 24,
+      "line_content": "jwt_secret = \"SuperSecretKeyThatShouldNotBeHere123\"",
+      "description": "Password or secret hardcoded in source code.",
+      "recommendation": "Use environment variables or secrets manager for credentials.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-003",
+      "name": "JWT algorithm none or weak",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 25,
+      "line_content": "token = jwt.encode({\"user\": \"admin\"}, jwt_secret, algorithm=\"HS256\")",
+      "description": "JWT using 'none' or weak HS256 algorithm.",
+      "recommendation": "Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.",
+      "cwe": "CWE-327",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-003",
+      "name": "JWT algorithm none or weak",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 28,
+      "line_content": "decoded = jwt.decode(token, jwt_secret, algorithms=[\"HS256\"])",
+      "description": "JWT using 'none' or weak HS256 algorithm.",
+      "recommendation": "Use RS256 or ES256 for JWT signing. Never allow 'none' algorithm.",
+      "cwe": "CWE-327",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 37,
+      "line_content": "@app.route(\"/login\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-006",
+      "name": "No password hashing",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 41,
+      "line_content": "password == request.json.get(\"pass\")",
+      "description": "Password compared directly without hashing.",
+      "recommendation": "Use bcrypt, argon2, or scrypt for password hashing and comparison.",
+      "cwe": "CWE-256",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 50,
+      "line_content": "@app.route(\"/api/transfer\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 55,
+      "line_content": "@app.route(\"/auth\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API1-001",
+      "name": "Direct object reference without authorisation check",
+      "category": "BOLA",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 66,
+      "line_content": "account_id = request.args.get(\"account_id\")",
+      "description": "API endpoint accesses object by user-supplied ID without authorisation check \u2014 classic BOLA.",
+      "recommendation": "Validate that the authenticated user owns or has access to the requested object before returning it.",
+      "cwe": "CWE-639",
+      "cve": "",
+      "compliance": [
+        "OWASP-API1",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 78,
+      "line_content": "@app.route(\"/api/profile\", methods=[\"PUT\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API3-001",
+      "name": "Mass assignment \u2014 request body to model directly",
+      "category": "Property Level Auth",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 80,
+      "line_content": "user.update(**request.json)",
+      "description": "Request body unpacked directly into model \u2014 mass assignment vulnerability.",
+      "recommendation": "Use explicit field allowlists. Never pass raw request body to model updates.",
+      "cwe": "CWE-915",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 117,
+      "line_content": "@app.route(\"/admin/users/create\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API5-001",
+      "name": "Admin endpoint without role/permission check",
+      "category": "BFLA",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 117,
+      "line_content": "@app.route(\"/admin/users/create\", methods=[\"POST\"])",
+      "description": "Administrative endpoint \u2014 ensure proper role-based access control.",
+      "recommendation": "Add role-based authorisation (e.g. @roles_required('admin'), isAdmin middleware).",
+      "cwe": "CWE-285",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 122,
+      "line_content": "@app.route(\"/api/user/role\", methods=[\"PUT\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API5-002",
+      "name": "Privilege escalation \u2014 user can modify roles",
+      "category": "BFLA",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 124,
+      "line_content": "role = request.json.get(\"role\")",
+      "description": "User-supplied input controls role/permission assignment.",
+      "recommendation": "Never accept role/permission changes from user input. Use server-side authorisation.",
+      "cwe": "CWE-269",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5"
+      ]
+    },
+    {
+      "rule_id": "API5-002",
+      "name": "Privilege escalation \u2014 user can modify roles",
+      "category": "BFLA",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 125,
+      "line_content": "is_admin = request.json.get(\"is_admin\")",
+      "description": "User-supplied input controls role/permission assignment.",
+      "recommendation": "Never accept role/permission changes from user input. Use server-side authorisation.",
+      "cwe": "CWE-269",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 134,
+      "line_content": "@app.route(\"/api/login\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 139,
+      "line_content": "@app.route(\"/api/checkout\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 144,
+      "line_content": "@app.route(\"/api/reset-password\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API7-001",
+      "name": "User-controlled URL in server-side request",
+      "category": "SSRF",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 152,
+      "line_content": "resp = requests.get(request.args.get(\"target_url\"))",
+      "description": "Server makes HTTP request using user-supplied URL \u2014 SSRF vulnerability.",
+      "recommendation": "Validate and restrict URLs to an allowlist of domains. Block internal IPs (10.x, 172.16-31.x, 192.168.x, 127.x, 169.254.x).",
+      "cwe": "CWE-918",
+      "cve": "",
+      "compliance": [
+        "OWASP-API7"
+      ]
+    },
+    {
+      "rule_id": "API2-001",
+      "name": "API endpoint without authentication decorator",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 162,
+      "line_content": "@app.route(\"/api/webhooks\", methods=[\"POST\"])",
+      "description": "Flask route accepting write methods \u2014 verify authentication is enforced.",
+      "recommendation": "Add @login_required or authentication middleware to all non-public endpoints.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-004",
+      "name": "JWT verify disabled",
+      "category": "Broken Authentication",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 187,
+      "line_content": "resp = requests.post(\"https://api.example.com\", verify=False)",
+      "description": "JWT signature or expiry verification is disabled.",
+      "recommendation": "Always verify JWT signature and expiration claims.",
+      "cwe": "CWE-345",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API8-008",
+      "name": "TLS certificate verification disabled",
+      "category": "Misconfiguration",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 187,
+      "line_content": "resp = requests.post(\"https://api.example.com\", verify=False)",
+      "description": "TLS certificate verification disabled \u2014 vulnerable to MITM attacks.",
+      "recommendation": "Always verify TLS certificates in production.",
+      "cwe": "CWE-295",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API8-009",
+      "name": "CORS credentials with wildcard origin",
+      "category": "Misconfiguration",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 190,
+      "line_content": "CORS(app, supports_credentials=True)",
+      "description": "CORS credentials enabled \u2014 if combined with wildcard origin, cookies leak to any site.",
+      "recommendation": "When credentials are enabled, restrict origins to specific trusted domains.",
+      "cwe": "CWE-942",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-001",
+      "name": "SQL injection via string formatting",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 219,
+      "line_content": "cursor.execute(f\"SELECT * FROM users WHERE name = '{q}'\")",
+      "description": "SQL query constructed with string formatting \u2014 SQL injection vulnerability.",
+      "recommendation": "Use parameterised queries or ORM methods. Never concatenate user input into SQL.",
+      "cwe": "CWE-89",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-002",
+      "name": "NoSQL injection",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 224,
+      "line_content": "result = db.users.find(request.json)",
+      "description": "MongoDB/NoSQL query with direct user input \u2014 NoSQL injection.",
+      "recommendation": "Validate and sanitise input. Use schema validation before database queries.",
+      "cwe": "CWE-943",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-002",
+      "name": "NoSQL injection",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 225,
+      "line_content": "record = db.orders.findOne(request.args)",
+      "description": "MongoDB/NoSQL query with direct user input \u2014 NoSQL injection.",
+      "recommendation": "Validate and sanitise input. Use schema validation before database queries.",
+      "cwe": "CWE-943",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-003",
+      "name": "Command injection via user input",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 231,
+      "line_content": "output = subprocess.run(request.args.get(\"cmd\"), shell=True)",
+      "description": "OS command executed with user-supplied input \u2014 command injection.",
+      "recommendation": "Never pass user input to shell commands. Use parameterised subprocess calls.",
+      "cwe": "CWE-78",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-007",
+      "name": "Path traversal via user input",
+      "category": "Input Validation",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 240,
+      "line_content": "return open(request.args.get(\"file\")).read()",
+      "description": "File path constructed from user input \u2014 path traversal vulnerability.",
+      "recommendation": "Validate and sanitise file paths. Use os.path.basename and restrict to allowed directories.",
+      "cwe": "CWE-22",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-001",
+      "name": "Hardcoded API key",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 243,
+      "line_content": "api_key = \"sk_live_abcdefghij1234567890\"",
+      "description": "API key hardcoded in source code.",
+      "recommendation": "Store API keys in environment variables or a secrets manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-001",
+      "name": "Hardcoded API key",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 244,
+      "line_content": "api_secret = \"secret_abcdefghijklmnop1234\"",
+      "description": "API key hardcoded in source code.",
+      "recommendation": "Store API keys in environment variables or a secrets manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-002",
+      "name": "Hardcoded password/secret",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 244,
+      "line_content": "api_secret = \"secret_abcdefghijklmnop1234\"",
+      "description": "Password or secret hardcoded in source code.",
+      "recommendation": "Use environment variables or secrets manager for credentials.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-002",
+      "name": "Hardcoded password/secret",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 247,
+      "line_content": "database_password = \"P@ssw0rd!SuperSecret123\"",
+      "description": "Password or secret hardcoded in source code.",
+      "recommendation": "Use environment variables or secrets manager for credentials.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-003",
+      "name": "Private key in source code",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 250,
+      "line_content": "key = \"\"\"-----BEGIN RSA PRIVATE KEY-----",
+      "description": "Private key embedded in source code.",
+      "recommendation": "Store private keys in a secrets manager. Never commit keys to source control.",
+      "cwe": "CWE-321",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-004",
+      "name": "AWS credentials hardcoded",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 255,
+      "line_content": "aws_key = \"AKIAIOSFODNN7EXAMPLE01\"",
+      "description": "AWS access key or secret key hardcoded.",
+      "recommendation": "Use IAM roles, instance profiles, or AWS Secrets Manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-005",
+      "name": "Database connection string with credentials",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 259,
+      "line_content": "db_url = \"postgresql://admin:secret123@db.example.com:5432/mydb\"",
+      "description": "Database connection string with embedded credentials.",
+      "recommendation": "Use environment variables for database connection strings.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-005",
+      "name": "Database connection string with credentials",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 260,
+      "line_content": "mongo_uri = \"mongodb://root:password@mongo.example.com:27017/admin\"",
+      "description": "Database connection string with embedded credentials.",
+      "recommendation": "Use environment variables for database connection strings.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SEC-006",
+      "name": "Bearer/OAuth token hardcoded",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 263,
+      "line_content": "headers = {\"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.abc123.def456\"}",
+      "description": "Bearer token hardcoded in source code.",
+      "recommendation": "Retrieve tokens dynamically from auth server or secrets manager.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-001",
+      "name": "API key in .env file",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 2,
+      "line_content": "API_KEY=sk_live_abcdefghij1234567890",
+      "description": "API key or secret stored in .env file \u2014 ensure not committed to source control.",
+      "recommendation": "Add .env to .gitignore. Use a secrets manager in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-001",
+      "name": "API key in .env file",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 3,
+      "line_content": "API_SECRET=secret_abcdefghijklmnop1234567890",
+      "description": "API key or secret stored in .env file \u2014 ensure not committed to source control.",
+      "recommendation": "Add .env to .gitignore. Use a secrets manager in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-001",
+      "name": "API key in .env file",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 4,
+      "line_content": "SECRET_KEY=django-insecure-s3cr3t-k3y-f0r-t3st1ng",
+      "description": "API key or secret stored in .env file \u2014 ensure not committed to source control.",
+      "recommendation": "Add .env to .gitignore. Use a secrets manager in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-003",
+      "name": "JWT secret in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 5,
+      "line_content": "JWT_SECRET=my-jwt-signing-secret-do-not-share",
+      "description": "JWT signing secret in .env \u2014 ensure strong, random value and not committed.",
+      "recommendation": "Use a cryptographically random JWT secret. Rotate regularly.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-001",
+      "name": "API key in .env file",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 6,
+      "line_content": "AUTH_TOKEN=pat_1234567890abcdefghijklmnop",
+      "description": "API key or secret stored in .env file \u2014 ensure not committed to source control.",
+      "recommendation": "Add .env to .gitignore. Use a secrets manager in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-002",
+      "name": "Database credentials in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 8,
+      "line_content": "DB_PASSWORD=P@ssw0rdForProductionDB",
+      "description": "Database password stored in .env file.",
+      "recommendation": "Use a secrets manager for database credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-002",
+      "name": "Database credentials in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 9,
+      "line_content": "POSTGRES_PASSWORD=postgres_super_secret",
+      "description": "Database password stored in .env file.",
+      "recommendation": "Use a secrets manager for database credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-002",
+      "name": "Database credentials in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 10,
+      "line_content": "MONGO_PASSWORD=mongo_admin_pass_123",
+      "description": "Database password stored in .env file.",
+      "recommendation": "Use a secrets manager for database credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-002",
+      "name": "Database credentials in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 11,
+      "line_content": "REDIS_PASSWORD=redis-pass-abc",
+      "description": "Database password stored in .env file.",
+      "recommendation": "Use a secrets manager for database credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-005",
+      "name": "OAuth client secret in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 13,
+      "line_content": "OAUTH_CLIENT_SECRET=google-oauth-secret-abc123",
+      "description": "OAuth client secret in .env file.",
+      "recommendation": "Use a secrets manager for OAuth credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-005",
+      "name": "OAuth client secret in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 14,
+      "line_content": "GITHUB_CLIENT_SECRET=gh_secret_1234567890abcdef",
+      "description": "OAuth client secret in .env file.",
+      "recommendation": "Use a secrets manager for OAuth credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-005",
+      "name": "OAuth client secret in .env",
+      "category": "Environment Secrets",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 15,
+      "line_content": "AUTH0_CLIENT_SECRET=auth0_secret_xyz789",
+      "description": "OAuth client secret in .env file.",
+      "recommendation": "Use a secrets manager for OAuth credentials in production.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-001",
+      "name": "Ingress without TLS",
+      "category": "K8s API Security",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 5,
+      "line_content": "kind: Ingress",
+      "description": "Kubernetes Ingress without TLS configuration.",
+      "recommendation": "Add TLS section with certificate secret to Ingress.",
+      "cwe": "CWE-319",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-001",
+      "name": "Ingress without TLS",
+      "category": "K8s API Security",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 5,
+      "line_content": "kind: Ingress",
+      "description": "Kubernetes Ingress without TLS configuration.",
+      "recommendation": "Add TLS section with certificate secret to Ingress.",
+      "cwe": "CWE-319",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-GW-001",
+      "name": "Nginx proxy_pass without rate limiting",
+      "category": "API Gateway",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\nginx_api.conf",
+      "line_num": 14,
+      "line_content": "proxy_pass http://api_backend;",
+      "description": "Nginx proxy_pass without rate limiting configuration.",
+      "recommendation": "Add limit_req_zone and limit_req directives for rate limiting.",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API-GW-001",
+      "name": "Nginx proxy_pass without rate limiting",
+      "category": "API Gateway",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\nginx_api.conf",
+      "line_num": 20,
+      "line_content": "proxy_pass http://api_backend;",
+      "description": "Nginx proxy_pass without rate limiting configuration.",
+      "recommendation": "Add limit_req_zone and limit_req directives for rate limiting.",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 14,
+      "line_content": "const JWT_SECRET = \"my-super-secret-jwt-key-12345678\";",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 15,
+      "line_content": "const token = jwt.sign({ user: \"admin\" }, JWT_SECRET, { algorithm: \"HS256\" });",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API1-003",
+      "name": "Express route with ID param lacking auth middleware",
+      "category": "BOLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 25,
+      "line_content": "router.get('/:userId/profile', (req, res) => {",
+      "description": "Express route with ID parameter \u2014 ensure authorisation middleware is applied.",
+      "recommendation": "Add authorisation middleware to verify the caller has access to the resource.",
+      "cwe": "CWE-639",
+      "cve": "",
+      "compliance": [
+        "OWASP-API1"
+      ]
+    },
+    {
+      "rule_id": "API1-003",
+      "name": "Express route with ID param lacking auth middleware",
+      "category": "BOLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 30,
+      "line_content": "router.delete('/:id/account', (req, res) => {",
+      "description": "Express route with ID parameter \u2014 ensure authorisation middleware is applied.",
+      "recommendation": "Add authorisation middleware to verify the caller has access to the resource.",
+      "cwe": "CWE-639",
+      "cve": "",
+      "compliance": [
+        "OWASP-API1"
+      ]
+    },
+    {
+      "rule_id": "API5-004",
+      "name": "Missing permission check on DELETE endpoint",
+      "category": "BFLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 30,
+      "line_content": "router.delete('/:id/account', (req, res) => {",
+      "description": "DELETE endpoint \u2014 ensure proper authorisation before resource deletion.",
+      "recommendation": "Add authorisation check verifying the caller has delete permissions.",
+      "cwe": "CWE-285",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5"
+      ]
+    },
+    {
+      "rule_id": "API3-002",
+      "name": "Excessive data exposure \u2014 full model serialisation",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 44,
+      "line_content": "res.json(JSON.stringify(user));",
+      "description": "Full model serialised to response \u2014 may expose internal/sensitive fields.",
+      "recommendation": "Use response serialisers with explicit field allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR"
+      ]
+    },
+    {
+      "rule_id": "API7-003",
+      "name": "Webhook URL from user input",
+      "category": "SSRF",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 63,
+      "line_content": "const webhook_url = req.body.callback_url;",
+      "description": "Webhook URL taken from user input \u2014 SSRF via webhook registration.",
+      "recommendation": "Validate webhook URLs and restrict to HTTPS with domain allowlist.",
+      "cwe": "CWE-918",
+      "cve": "",
+      "compliance": [
+        "OWASP-API7"
+      ]
+    },
+    {
+      "rule_id": "API8-002",
+      "name": "Debug mode enabled",
+      "category": "Misconfiguration",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 75,
+      "line_content": "process.env.DEBUG = true;",
+      "description": "Debug mode enabled \u2014 exposes stack traces, internal paths, and sensitive info.",
+      "recommendation": "Disable debug mode in production environments.",
+      "cwe": "CWE-215",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-INJ-004",
+      "name": "XSS via unsanitised output",
+      "category": "Input Validation",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 116,
+      "line_content": "element.innerHTML = req.body.html;",
+      "description": "User input rendered as HTML without sanitisation \u2014 XSS vulnerability.",
+      "recommendation": "Sanitise all output. Use context-appropriate encoding.",
+      "cwe": "CWE-79",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-TLS-001",
+      "name": "HTTP endpoint (not HTTPS)",
+      "category": "Transport Security",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 135,
+      "line_content": "const partnerApi = \"http://api.partner-service.com/v2/data\";",
+      "description": "Non-HTTPS endpoint used \u2014 data transmitted in cleartext.",
+      "recommendation": "Use HTTPS for all API endpoints.",
+      "cwe": "CWE-319",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 138,
+      "line_content": "console.log(`Auth token: ${token}, password: ${password}`);",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-LOG-001",
+      "name": "Sensitive data in logs",
+      "category": "Logging & Monitoring",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 138,
+      "line_content": "console.log(`Auth token: ${token}, password: ${password}`);",
+      "description": "Sensitive data written to logs.",
+      "recommendation": "Mask or redact sensitive data before logging.",
+      "cwe": "CWE-532",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-TLS-003",
+      "name": "Weak cipher suite",
+      "category": "Transport Security",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 142,
+      "line_content": "axios.get(\"https://slow-api.com/data\", { timeout: null });",
+      "description": "Weak cipher suite configured.",
+      "recommendation": "Use only strong cipher suites (AES-256-GCM, CHACHA20-POLY1305).",
+      "cwe": "CWE-327",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-002",
+      "name": "RPC without authentication metadata",
+      "category": "Protobuf",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 25,
+      "line_content": "rpc GetUser (GetUserRequest) returns (UserResponse);",
+      "description": "gRPC RPC method defined \u2014 ensure authentication interceptor is configured.",
+      "recommendation": "Implement per-RPC authentication using metadata interceptors.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-002",
+      "name": "RPC without authentication metadata",
+      "category": "Protobuf",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 26,
+      "line_content": "rpc UpdateUser (UpdateUserRequest) returns (UserResponse);",
+      "description": "gRPC RPC method defined \u2014 ensure authentication interceptor is configured.",
+      "recommendation": "Implement per-RPC authentication using metadata interceptors.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-002",
+      "name": "RPC without authentication metadata",
+      "category": "Protobuf",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 27,
+      "line_content": "rpc DeleteUser (DeleteUserRequest) returns (Empty);",
+      "description": "gRPC RPC method defined \u2014 ensure authentication interceptor is configured.",
+      "recommendation": "Implement per-RPC authentication using metadata interceptors.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-002",
+      "name": "RPC without authentication metadata",
+      "category": "Protobuf",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 28,
+      "line_content": "rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);",
+      "description": "gRPC RPC method defined \u2014 ensure authentication interceptor is configured.",
+      "recommendation": "Implement per-RPC authentication using metadata interceptors.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-002",
+      "name": "RPC without authentication metadata",
+      "category": "Protobuf",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 32,
+      "line_content": "rpc CreateAdmin (CreateAdminRequest) returns (AdminResponse);",
+      "description": "gRPC RPC method defined \u2014 ensure authentication interceptor is configured.",
+      "recommendation": "Implement per-RPC authentication using metadata interceptors.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-002",
+      "name": "RPC without authentication metadata",
+      "category": "Protobuf",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 33,
+      "line_content": "rpc ResetPassword (ResetPasswordRequest) returns (Empty);",
+      "description": "gRPC RPC method defined \u2014 ensure authentication interceptor is configured.",
+      "recommendation": "Implement per-RPC authentication using metadata interceptors.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 19,
+      "line_content": "@app.route(\"/api/users\", methods=[\"POST\", \"PUT\", \"DELETE\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 24,
+      "line_content": "jwt_secret = \"SuperSecretKeyThatShouldNotBeHere123\"",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 25,
+      "line_content": "token = jwt.encode({\"user\": \"admin\"}, jwt_secret, algorithm=\"HS256\")",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-005",
+      "name": "API key in query string",
+      "category": "Broken Authentication",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 34,
+      "line_content": "api_key = request.args.get(\"api_key\")",
+      "description": "API key passed in URL query string \u2014 exposed in logs and browser history.",
+      "recommendation": "Pass API keys in Authorization header, not in URL query parameters.",
+      "cwe": "CWE-598",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 37,
+      "line_content": "@app.route(\"/login\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 41,
+      "line_content": "password == request.json.get(\"pass\")",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API2-007",
+      "name": "Basic auth over HTTP",
+      "category": "Broken Authentication",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 44,
+      "line_content": "from flask_httpauth import HTTPBasicAuth",
+      "description": "Basic authentication detected \u2014 ensure HTTPS is enforced.",
+      "recommendation": "Only use Basic Auth over HTTPS/TLS. Prefer token-based auth.",
+      "cwe": "CWE-523",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-007",
+      "name": "Basic auth over HTTP",
+      "category": "Broken Authentication",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 45,
+      "line_content": "basic_auth = HTTPBasicAuth()",
+      "description": "Basic authentication detected \u2014 ensure HTTPS is enforced.",
+      "recommendation": "Only use Basic Auth over HTTPS/TLS. Prefer token-based auth.",
+      "cwe": "CWE-523",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-008",
+      "name": "Missing CSRF protection on state-changing endpoint",
+      "category": "Broken Authentication",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 48,
+      "line_content": "from flask_wtf.csrf import csrf_exempt",
+      "description": "CSRF protection explicitly disabled on endpoint.",
+      "recommendation": "Enable CSRF protection on all state-changing API endpoints.",
+      "cwe": "CWE-352",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API2-008",
+      "name": "Missing CSRF protection on state-changing endpoint",
+      "category": "Broken Authentication",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 49,
+      "line_content": "@csrf_exempt",
+      "description": "CSRF protection explicitly disabled on endpoint.",
+      "recommendation": "Enable CSRF protection on all state-changing API endpoints.",
+      "cwe": "CWE-352",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 50,
+      "line_content": "@app.route(\"/api/transfer\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API6-002",
+      "name": "No anti-automation on payment/checkout flow",
+      "category": "Business Flow",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 50,
+      "line_content": "@app.route(\"/api/transfer\", methods=[\"POST\"])",
+      "description": "Financial transaction endpoint without anti-automation controls.",
+      "recommendation": "Add CAPTCHA, velocity checks, and transaction verification on financial endpoints.",
+      "cwe": "CWE-799",
+      "cve": "",
+      "compliance": [
+        "OWASP-API6",
+        "PCI-DSS",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 55,
+      "line_content": "@app.route(\"/auth\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API2-010",
+      "name": "OAuth2 implicit flow",
+      "category": "Broken Authentication",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 61,
+      "line_content": "oauth_config = {\"response_type\": \"token\", \"grant\": \"implicit flow\"}",
+      "description": "OAuth2 implicit flow is deprecated and insecure.",
+      "recommendation": "Use Authorization Code flow with PKCE instead of implicit flow.",
+      "cwe": "CWE-287",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 64,
+      "line_content": "@app.route(\"/api/account\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API1-002",
+      "name": "Path parameter ID without ownership validation",
+      "category": "BOLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 70,
+      "line_content": "@app.get(\"/api/users/<int:id>\")",
+      "description": "Flask route with path parameter ID \u2014 ensure ownership validation is performed.",
+      "recommendation": "Add ownership validation middleware or check that current_user owns the resource.",
+      "cwe": "CWE-639",
+      "cve": "",
+      "compliance": [
+        "OWASP-API1"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 70,
+      "line_content": "@app.get(\"/api/users/<int:id>\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 78,
+      "line_content": "@app.route(\"/api/profile\", methods=[\"PUT\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API3-002",
+      "name": "Excessive data exposure \u2014 full model serialisation",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 81,
+      "line_content": "return jsonify(user.to_dict())",
+      "description": "Full model serialised to response \u2014 may expose internal/sensitive fields.",
+      "recommendation": "Use response serialisers with explicit field allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR"
+      ]
+    },
+    {
+      "rule_id": "API1-002",
+      "name": "Path parameter ID without ownership validation",
+      "category": "BOLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 84,
+      "line_content": "@app.route(\"/api/user/<int:id>\")",
+      "description": "Flask route with path parameter ID \u2014 ensure ownership validation is performed.",
+      "recommendation": "Add ownership validation middleware or check that current_user owns the resource.",
+      "cwe": "CWE-639",
+      "cve": "",
+      "compliance": [
+        "OWASP-API1"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 84,
+      "line_content": "@app.route(\"/api/user/<int:id>\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API3-002",
+      "name": "Excessive data exposure \u2014 full model serialisation",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 87,
+      "line_content": "return jsonify(user.to_dict())",
+      "description": "Full model serialised to response \u2014 may expose internal/sensitive fields.",
+      "recommendation": "Use response serialisers with explicit field allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 99,
+      "line_content": "@app.route(\"/api/search\", methods=[\"GET\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 117,
+      "line_content": "@app.route(\"/admin/users/create\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 122,
+      "line_content": "@app.route(\"/api/user/role\", methods=[\"PUT\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API1-002",
+      "name": "Path parameter ID without ownership validation",
+      "category": "BOLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 129,
+      "line_content": "@app.delete(\"/api/records/<int:id>\")",
+      "description": "Flask route with path parameter ID \u2014 ensure ownership validation is performed.",
+      "recommendation": "Add ownership validation middleware or check that current_user owns the resource.",
+      "cwe": "CWE-639",
+      "cve": "",
+      "compliance": [
+        "OWASP-API1"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 129,
+      "line_content": "@app.delete(\"/api/records/<int:id>\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API5-004",
+      "name": "Missing permission check on DELETE endpoint",
+      "category": "BFLA",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 129,
+      "line_content": "@app.delete(\"/api/records/<int:id>\")",
+      "description": "DELETE endpoint \u2014 ensure proper authorisation before resource deletion.",
+      "recommendation": "Add authorisation check verifying the caller has delete permissions.",
+      "cwe": "CWE-285",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 134,
+      "line_content": "@app.route(\"/api/login\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 139,
+      "line_content": "@app.route(\"/api/checkout\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API6-002",
+      "name": "No anti-automation on payment/checkout flow",
+      "category": "Business Flow",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 139,
+      "line_content": "@app.route(\"/api/checkout\", methods=[\"POST\"])",
+      "description": "Financial transaction endpoint without anti-automation controls.",
+      "recommendation": "Add CAPTCHA, velocity checks, and transaction verification on financial endpoints.",
+      "cwe": "CWE-799",
+      "cve": "",
+      "compliance": [
+        "OWASP-API6",
+        "PCI-DSS",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 144,
+      "line_content": "@app.route(\"/api/reset-password\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API6-003",
+      "name": "Password reset without rate limiting",
+      "category": "Business Flow",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 144,
+      "line_content": "@app.route(\"/api/reset-password\", methods=[\"POST\"])",
+      "description": "Password reset endpoint \u2014 ensure rate limiting and token expiry.",
+      "recommendation": "Rate-limit password reset requests and use short-lived tokens.",
+      "cwe": "CWE-640",
+      "cve": "",
+      "compliance": [
+        "OWASP-API6"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 149,
+      "line_content": "@app.route(\"/api/fetch\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 156,
+      "line_content": "@app.route(\"/redirect\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API7-002",
+      "name": "URL parameter used for redirect",
+      "category": "SSRF",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 158,
+      "line_content": "redirect_to = request.args.get(\"redirect_to\")",
+      "description": "Open redirect via user-supplied URL \u2014 can be chained with SSRF.",
+      "recommendation": "Validate redirect URLs against an allowlist. Never redirect to arbitrary user input.",
+      "cwe": "CWE-601",
+      "cve": "",
+      "compliance": [
+        "OWASP-API7"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 162,
+      "line_content": "@app.route(\"/api/webhooks\", methods=[\"POST\"])",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API7-003",
+      "name": "Webhook URL from user input",
+      "category": "SSRF",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 164,
+      "line_content": "webhook_url = request.json.get(\"callback_url\")",
+      "description": "Webhook URL taken from user input \u2014 SSRF via webhook registration.",
+      "recommendation": "Validate webhook URLs and restrict to HTTPS with domain allowlist.",
+      "cwe": "CWE-918",
+      "cve": "",
+      "compliance": [
+        "OWASP-API7"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 193,
+      "line_content": "@app.route(\"/api-docs\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 198,
+      "line_content": "@app.route(\"/api/v1/legacy\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 204,
+      "line_content": "@app.route(\"/debug/info\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API9-004",
+      "name": "Internal/debug endpoint exposed",
+      "category": "Inventory Management",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 204,
+      "line_content": "@app.route(\"/debug/info\")",
+      "description": "Internal or debug endpoint exposed \u2014 may leak sensitive operational data.",
+      "recommendation": "Remove debug/test endpoints from production. Restrict internal endpoints to internal networks.",
+      "cwe": "CWE-200",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 216,
+      "line_content": "@app.route(\"/api/query\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 228,
+      "line_content": "@app.route(\"/api/ping\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API4-001",
+      "name": "No rate limiting on API endpoint",
+      "category": "Resource Consumption",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 238,
+      "line_content": "@app.route(\"/api/download\")",
+      "description": "API endpoint without rate limiting \u2014 vulnerable to abuse and DoS.",
+      "recommendation": "Apply rate limiting (e.g. flask-limiter, express-rate-limit, @RateLimiter).",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 244,
+      "line_content": "api_secret = \"secret_abcdefghijklmnop1234\"",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 247,
+      "line_content": "database_password = \"P@ssw0rd!SuperSecret123\"",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-TLS-001",
+      "name": "HTTP endpoint (not HTTPS)",
+      "category": "Transport Security",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 266,
+      "line_content": "partner_api = \"http://api.partner.com/v1/data\"",
+      "description": "Non-HTTPS endpoint used \u2014 data transmitted in cleartext.",
+      "recommendation": "Use HTTPS for all API endpoints.",
+      "cwe": "CWE-319",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-TLS-002",
+      "name": "Weak TLS version allowed",
+      "category": "Transport Security",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 270,
+      "line_content": "ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1)",
+      "description": "Weak TLS version (< 1.2) configured \u2014 vulnerable to downgrade attacks.",
+      "recommendation": "Enforce TLS 1.2 or higher. Disable TLS 1.0 and 1.1.",
+      "cwe": "CWE-326",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API3-003",
+      "name": "Internal fields exposed in API response",
+      "category": "Property Level Auth",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 273,
+      "line_content": "logging.info(f\"User login with password: {password} and token: {token}\")",
+      "description": "Sensitive or internal field may be included in API response.",
+      "recommendation": "Exclude sensitive fields from API responses using serialiser allowlists.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3",
+        "GDPR",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "rule_id": "API-SPEC-002",
+      "name": "No global security scheme defined",
+      "category": "OpenAPI Spec",
+      "severity": "HIGH",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_openapi.yaml",
+      "line_num": 2,
+      "line_content": "openapi: \"3.0.3\"",
+      "description": "OpenAPI 3.x spec detected \u2014 verify global security schemes are defined.",
+      "recommendation": "Define securitySchemes in components and apply globally or per-operation.",
+      "cwe": "CWE-306",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-006",
+      "name": "Webhook secret in .env",
+      "category": "Environment Secrets",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 17,
+      "line_content": "WEBHOOK_SECRET=whsec_abcdef1234567890",
+      "description": "Webhook signing secret in .env.",
+      "recommendation": "Ensure webhook secrets are strong and rotated regularly.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-006",
+      "name": "Webhook secret in .env",
+      "category": "Environment Secrets",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 18,
+      "line_content": "STRIPE_WEBHOOK_SECRET=whsec_stripe_secret_key_123",
+      "description": "Webhook signing secret in .env.",
+      "recommendation": "Ensure webhook secrets are strong and rotated regularly.",
+      "cwe": "CWE-798",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-004",
+      "name": "Debug mode enabled in .env",
+      "category": "Environment Secrets",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 20,
+      "line_content": "DEBUG=true",
+      "description": "Debug mode enabled via environment variable.",
+      "recommendation": "Disable debug mode in production environments.",
+      "cwe": "CWE-215",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-004",
+      "name": "Debug mode enabled in .env",
+      "category": "Environment Secrets",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 21,
+      "line_content": "NODE_ENV=development",
+      "description": "Debug mode enabled via environment variable.",
+      "recommendation": "Disable debug mode in production environments.",
+      "cwe": "CWE-215",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-ENV-004",
+      "name": "Debug mode enabled in .env",
+      "category": "Environment Secrets",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\.env.api",
+      "line_num": 22,
+      "line_content": "FLASK_DEBUG=1",
+      "description": "Debug mode enabled via environment variable.",
+      "recommendation": "Disable debug mode in production environments.",
+      "cwe": "CWE-215",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-002",
+      "name": "Service type LoadBalancer without restriction",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 27,
+      "line_content": "type: LoadBalancer",
+      "description": "LoadBalancer service without source IP restrictions.",
+      "recommendation": "Add loadBalancerSourceRanges to restrict access.",
+      "cwe": "CWE-668",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-002",
+      "name": "Service type LoadBalancer without restriction",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 27,
+      "line_content": "type: LoadBalancer",
+      "description": "LoadBalancer service without source IP restrictions.",
+      "recommendation": "Add loadBalancerSourceRanges to restrict access.",
+      "cwe": "CWE-668",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-003",
+      "name": "Missing NetworkPolicy for API pods",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 37,
+      "line_content": "kind: Deployment",
+      "description": "API deployment without associated NetworkPolicy.",
+      "recommendation": "Create NetworkPolicy to restrict ingress/egress traffic.",
+      "cwe": "CWE-668",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-003",
+      "name": "Missing NetworkPolicy for API pods",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 37,
+      "line_content": "kind: Deployment",
+      "description": "API deployment without associated NetworkPolicy.",
+      "recommendation": "Create NetworkPolicy to restrict ingress/egress traffic.",
+      "cwe": "CWE-668",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-004",
+      "name": "API container without resource limits",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 50,
+      "line_content": "containers:",
+      "description": "Container without resource limits \u2014 vulnerable to resource exhaustion.",
+      "recommendation": "Set CPU and memory limits on all API containers.",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-004",
+      "name": "API container without resource limits",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 50,
+      "line_content": "containers:",
+      "description": "Container without resource limits \u2014 vulnerable to resource exhaustion.",
+      "recommendation": "Set CPU and memory limits on all API containers.",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-005",
+      "name": "Secret mounted as environment variable",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 59,
+      "line_content": "secretKeyRef:",
+      "description": "K8s secret mounted as environment variable \u2014 visible in process listing.",
+      "recommendation": "Mount secrets as files instead of environment variables.",
+      "cwe": "CWE-214",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-005",
+      "name": "Secret mounted as environment variable",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 59,
+      "line_content": "secretKeyRef:",
+      "description": "K8s secret mounted as environment variable \u2014 visible in process listing.",
+      "recommendation": "Mount secrets as files instead of environment variables.",
+      "cwe": "CWE-214",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-005",
+      "name": "Secret mounted as environment variable",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 64,
+      "line_content": "secretKeyRef:",
+      "description": "K8s secret mounted as environment variable \u2014 visible in process listing.",
+      "recommendation": "Mount secrets as files instead of environment variables.",
+      "cwe": "CWE-214",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API-K8S-005",
+      "name": "Secret mounted as environment variable",
+      "category": "K8s API Security",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\k8s_api_deploy.yaml",
+      "line_num": 64,
+      "line_content": "secretKeyRef:",
+      "description": "K8s secret mounted as environment variable \u2014 visible in process listing.",
+      "recommendation": "Mount secrets as files instead of environment variables.",
+      "cwe": "CWE-214",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API5-003",
+      "name": "HTTP method override allowed",
+      "category": "BFLA",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 53,
+      "line_content": "app.use(require('method-override')('X-HTTP-Method-Override'));",
+      "description": "HTTP method override enabled \u2014 may bypass method-based access controls.",
+      "recommendation": "Disable HTTP method override or restrict to safe methods.",
+      "cwe": "CWE-285",
+      "cve": "",
+      "compliance": [
+        "OWASP-API5"
+      ]
+    },
+    {
+      "rule_id": "API8-003",
+      "name": "Verbose error messages exposed",
+      "category": "Misconfiguration",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 79,
+      "line_content": "res.status(500).json({ error: err.stack });",
+      "description": "Stack traces or verbose error details exposed in API responses.",
+      "recommendation": "Return generic error messages. Log details server-side only.",
+      "cwe": "CWE-209",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API9-002",
+      "name": "Swagger/OpenAPI endpoint publicly exposed",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 98,
+      "line_content": "app.get('/swagger', (req, res) => res.json(swaggerDoc));",
+      "description": "API documentation endpoint publicly accessible \u2014 exposes API surface.",
+      "recommendation": "Restrict API documentation access in production. Use authentication or IP allowlist.",
+      "cwe": "CWE-200",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API9-002",
+      "name": "Swagger/OpenAPI endpoint publicly exposed",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 99,
+      "line_content": "app.get('/api-docs', (req, res) => res.json(swaggerDoc));",
+      "description": "API documentation endpoint publicly accessible \u2014 exposes API surface.",
+      "recommendation": "Restrict API documentation access in production. Use authentication or IP allowlist.",
+      "cwe": "CWE-200",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API9-001",
+      "name": "API version in URL without deprecation",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 135,
+      "line_content": "const partnerApi = \"http://api.partner-service.com/v2/data\";",
+      "description": "Multiple API versions detected \u2014 ensure old versions are deprecated and retired.",
+      "recommendation": "Maintain API version inventory. Deprecate and retire old versions with clear timelines.",
+      "cwe": "CWE-1059",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API-LOG-003",
+      "name": "Full request body logged",
+      "category": "Logging & Monitoring",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 139,
+      "line_content": "console.log(`Request body: ${JSON.stringify(req.body)}`);",
+      "description": "Full request body logged \u2014 may contain sensitive user data.",
+      "recommendation": "Log request metadata only. Redact body or log sanitised summaries.",
+      "cwe": "CWE-532",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8",
+        "GDPR"
+      ]
+    },
+    {
+      "rule_id": "API4-004",
+      "name": "No request timeout configured",
+      "category": "Resource Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 142,
+      "line_content": "axios.get(\"https://slow-api.com/data\", { timeout: null });",
+      "description": "Request timeout disabled \u2014 allows slow-loris and resource exhaustion attacks.",
+      "recommendation": "Set appropriate request timeouts (e.g. 30 seconds for API calls).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API10-002",
+      "name": "External API call without timeout",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 145,
+      "line_content": "const resp = await fetch(\"https://api.third-party.com/data\");",
+      "description": "External API call without timeout \u2014 may hang indefinitely.",
+      "recommendation": "Set explicit timeouts on all external API calls (e.g. timeout=30).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 11,
+      "line_content": "string password = 4;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 12,
+      "line_content": "string ssn = 5;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 13,
+      "line_content": "string api_key = 6;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 14,
+      "line_content": "string credit_card = 7;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 19,
+      "line_content": "string password = 2;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 20,
+      "line_content": "string token = 3;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 62,
+      "line_content": "string password = 2;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API-PROTO-001",
+      "name": "Sensitive field without field_behavior annotation",
+      "category": "Protobuf",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.proto",
+      "line_num": 67,
+      "line_content": "string token = 2;",
+      "description": "Protobuf message contains sensitive field without OUTPUT_ONLY annotation.",
+      "recommendation": "Add google.api.field_behavior = OUTPUT_ONLY or remove from response messages.",
+      "cwe": "CWE-213",
+      "cve": "",
+      "compliance": [
+        "OWASP-API3"
+      ]
+    },
+    {
+      "rule_id": "API6-001",
+      "name": "No CAPTCHA on authentication endpoint",
+      "category": "Business Flow",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 37,
+      "line_content": "@app.route(\"/login\", methods=[\"POST\"])",
+      "description": "Authentication endpoint without CAPTCHA \u2014 vulnerable to credential stuffing.",
+      "recommendation": "Add CAPTCHA or progressive delays after failed attempts.",
+      "cwe": "CWE-307",
+      "cve": "",
+      "compliance": [
+        "OWASP-API6",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API2-009",
+      "name": "Session fixation risk \u2014 no session regeneration",
+      "category": "Broken Authentication",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 57,
+      "line_content": "session[\"user\"] = request.json.get(\"username\")",
+      "description": "Session data set without regenerating session ID after authentication.",
+      "recommendation": "Regenerate session ID after successful authentication.",
+      "cwe": "CWE-384",
+      "cve": "",
+      "compliance": [
+        "OWASP-API2"
+      ]
+    },
+    {
+      "rule_id": "API4-002",
+      "name": "No pagination on list endpoint",
+      "category": "Resource Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 104,
+      "line_content": "results = User.query.filter().all()",
+      "description": "Query returns all records without pagination \u2014 resource exhaustion risk.",
+      "recommendation": "Implement pagination with limit/offset or cursor-based pagination.",
+      "cwe": "CWE-770",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API4-004",
+      "name": "No request timeout configured",
+      "category": "Resource Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 110,
+      "line_content": "response = requests.get(\"https://external-api.com/data\", timeout=None)",
+      "description": "Request timeout disabled \u2014 allows slow-loris and resource exhaustion attacks.",
+      "recommendation": "Set appropriate request timeouts (e.g. 30 seconds for API calls).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API4"
+      ]
+    },
+    {
+      "rule_id": "API10-002",
+      "name": "External API call without timeout",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 110,
+      "line_content": "response = requests.get(\"https://external-api.com/data\", timeout=None)",
+      "description": "External API call without timeout \u2014 may hang indefinitely.",
+      "recommendation": "Set explicit timeouts on all external API calls (e.g. timeout=30).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API6-001",
+      "name": "No CAPTCHA on authentication endpoint",
+      "category": "Business Flow",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 134,
+      "line_content": "@app.route(\"/api/login\", methods=[\"POST\"])",
+      "description": "Authentication endpoint without CAPTCHA \u2014 vulnerable to credential stuffing.",
+      "recommendation": "Add CAPTCHA or progressive delays after failed attempts.",
+      "cwe": "CWE-307",
+      "cve": "",
+      "compliance": [
+        "OWASP-API6",
+        "DORA"
+      ]
+    },
+    {
+      "rule_id": "API10-002",
+      "name": "External API call without timeout",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 152,
+      "line_content": "resp = requests.get(request.args.get(\"target_url\"))",
+      "description": "External API call without timeout \u2014 may hang indefinitely.",
+      "recommendation": "Set explicit timeouts on all external API calls (e.g. timeout=30).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API8-003",
+      "name": "Verbose error messages exposed",
+      "category": "Misconfiguration",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 178,
+      "line_content": "return jsonify({\"error\": traceback.format_exc()}), 500",
+      "description": "Stack traces or verbose error details exposed in API responses.",
+      "recommendation": "Return generic error messages. Log details server-side only.",
+      "cwe": "CWE-209",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API8-007",
+      "name": "Bind to 0.0.0.0",
+      "category": "Misconfiguration",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 184,
+      "line_content": "app.run(host=\"0.0.0.0\", port=5000)",
+      "description": "API binds to all network interfaces including public.",
+      "recommendation": "Bind to 127.0.0.1 or use a reverse proxy for external access.",
+      "cwe": "CWE-668",
+      "cve": "",
+      "compliance": [
+        "OWASP-API8"
+      ]
+    },
+    {
+      "rule_id": "API10-002",
+      "name": "External API call without timeout",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 187,
+      "line_content": "resp = requests.post(\"https://api.example.com\", verify=False)",
+      "description": "External API call without timeout \u2014 may hang indefinitely.",
+      "recommendation": "Set explicit timeouts on all external API calls (e.g. timeout=30).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API9-002",
+      "name": "Swagger/OpenAPI endpoint publicly exposed",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 193,
+      "line_content": "@app.route(\"/api-docs\")",
+      "description": "API documentation endpoint publicly accessible \u2014 exposes API surface.",
+      "recommendation": "Restrict API documentation access in production. Use authentication or IP allowlist.",
+      "cwe": "CWE-200",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API9-001",
+      "name": "API version in URL without deprecation",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 198,
+      "line_content": "@app.route(\"/api/v1/legacy\")",
+      "description": "Multiple API versions detected \u2014 ensure old versions are deprecated and retired.",
+      "recommendation": "Maintain API version inventory. Deprecate and retire old versions with clear timelines.",
+      "cwe": "CWE-1059",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API9-003",
+      "name": "Deprecated API endpoint still active",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 198,
+      "line_content": "@app.route(\"/api/v1/legacy\")",
+      "description": "Deprecated API code still present \u2014 may lack security updates.",
+      "recommendation": "Remove deprecated endpoints or apply identical security controls as current versions.",
+      "cwe": "CWE-1059",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API9-003",
+      "name": "Deprecated API endpoint still active",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 199,
+      "line_content": "def legacy():",
+      "description": "Deprecated API code still present \u2014 may lack security updates.",
+      "recommendation": "Remove deprecated endpoints or apply identical security controls as current versions.",
+      "cwe": "CWE-1059",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API9-003",
+      "name": "Deprecated API endpoint still active",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 200,
+      "line_content": "\"\"\"deprecated endpoint\"\"\"",
+      "description": "Deprecated API code still present \u2014 may lack security updates.",
+      "recommendation": "Remove deprecated endpoints or apply identical security controls as current versions.",
+      "cwe": "CWE-1059",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API10-002",
+      "name": "External API call without timeout",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 209,
+      "line_content": "external = requests.get(\"https://api.partner.com/data\")",
+      "description": "External API call without timeout \u2014 may hang indefinitely.",
+      "recommendation": "Set explicit timeouts on all external API calls (e.g. timeout=30).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-002",
+      "name": "External API call without timeout",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 213,
+      "line_content": "r = requests.get(\"https://untrusted.com\", allow_redirects=True)",
+      "description": "External API call without timeout \u2014 may hang indefinitely.",
+      "recommendation": "Set explicit timeouts on all external API calls (e.g. timeout=30).",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-004",
+      "name": "Blindly following redirects from external API",
+      "category": "Unsafe Consumption",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 213,
+      "line_content": "r = requests.get(\"https://untrusted.com\", allow_redirects=True)",
+      "description": "Following redirects from external APIs without limit \u2014 SSRF escalation risk.",
+      "recommendation": "Disable or limit redirects when calling external APIs.",
+      "cwe": "CWE-601",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API9-001",
+      "name": "API version in URL without deprecation",
+      "category": "Inventory Management",
+      "severity": "MEDIUM",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 266,
+      "line_content": "partner_api = \"http://api.partner.com/v1/data\"",
+      "description": "Multiple API versions detected \u2014 ensure old versions are deprecated and retired.",
+      "recommendation": "Maintain API version inventory. Deprecate and retire old versions with clear timelines.",
+      "cwe": "CWE-1059",
+      "cve": "",
+      "compliance": [
+        "OWASP-API9"
+      ]
+    },
+    {
+      "rule_id": "API-GW-002",
+      "name": "Nginx upstream without health check",
+      "category": "API Gateway",
+      "severity": "LOW",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\nginx_api.conf",
+      "line_num": 3,
+      "line_content": "upstream api_backend {",
+      "description": "Nginx upstream block without health check configuration.",
+      "recommendation": "Add health_check directive to upstream blocks.",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-003",
+      "name": "No circuit breaker on external API",
+      "category": "Unsafe Consumption",
+      "severity": "LOW",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.js",
+      "line_num": 142,
+      "line_content": "axios.get(\"https://slow-api.com/data\", { timeout: null });",
+      "description": "External API call without circuit breaker pattern.",
+      "recommendation": "Implement circuit breaker pattern for external API dependencies.",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-003",
+      "name": "No circuit breaker on external API",
+      "category": "Unsafe Consumption",
+      "severity": "LOW",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 110,
+      "line_content": "response = requests.get(\"https://external-api.com/data\", timeout=None)",
+      "description": "External API call without circuit breaker pattern.",
+      "recommendation": "Implement circuit breaker pattern for external API dependencies.",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-003",
+      "name": "No circuit breaker on external API",
+      "category": "Unsafe Consumption",
+      "severity": "LOW",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 187,
+      "line_content": "resp = requests.post(\"https://api.example.com\", verify=False)",
+      "description": "External API call without circuit breaker pattern.",
+      "recommendation": "Implement circuit breaker pattern for external API dependencies.",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-003",
+      "name": "No circuit breaker on external API",
+      "category": "Unsafe Consumption",
+      "severity": "LOW",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 209,
+      "line_content": "external = requests.get(\"https://api.partner.com/data\")",
+      "description": "External API call without circuit breaker pattern.",
+      "recommendation": "Implement circuit breaker pattern for external API dependencies.",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    },
+    {
+      "rule_id": "API10-003",
+      "name": "No circuit breaker on external API",
+      "category": "Unsafe Consumption",
+      "severity": "LOW",
+      "file_path": "C:\\KRISHNENDU\\PROJECTS\\API-Security\\API-Security\\tests\\samples\\vulnerable_api.py",
+      "line_num": 213,
+      "line_content": "r = requests.get(\"https://untrusted.com\", allow_redirects=True)",
+      "description": "External API call without circuit breaker pattern.",
+      "recommendation": "Implement circuit breaker pattern for external API dependencies.",
+      "cwe": "CWE-400",
+      "cve": "",
+      "compliance": [
+        "OWASP-API10"
+      ]
+    }
+  ]
+}
